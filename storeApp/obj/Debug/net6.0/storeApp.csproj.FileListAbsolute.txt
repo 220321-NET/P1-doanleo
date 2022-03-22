@@ -1,0 +1,15 @@
+C:\Users\chain\Desktop\work\Week 1 Repo\P0-doanleo\storeApp\bin\Debug\net6.0\storeApp.exe
+C:\Users\chain\Desktop\work\Week 1 Repo\P0-doanleo\storeApp\bin\Debug\net6.0\storeApp.deps.json
+C:\Users\chain\Desktop\work\Week 1 Repo\P0-doanleo\storeApp\bin\Debug\net6.0\storeApp.runtimeconfig.json
+C:\Users\chain\Desktop\work\Week 1 Repo\P0-doanleo\storeApp\bin\Debug\net6.0\storeApp.dll
+C:\Users\chain\Desktop\work\Week 1 Repo\P0-doanleo\storeApp\bin\Debug\net6.0\storeApp.pdb
+C:\Users\chain\Desktop\work\Week 1 Repo\P0-doanleo\storeApp\obj\Debug\net6.0\storeApp.csproj.AssemblyReference.cache
+C:\Users\chain\Desktop\work\Week 1 Repo\P0-doanleo\storeApp\obj\Debug\net6.0\storeApp.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\chain\Desktop\work\Week 1 Repo\P0-doanleo\storeApp\obj\Debug\net6.0\storeApp.AssemblyInfoInputs.cache
+C:\Users\chain\Desktop\work\Week 1 Repo\P0-doanleo\storeApp\obj\Debug\net6.0\storeApp.AssemblyInfo.cs
+C:\Users\chain\Desktop\work\Week 1 Repo\P0-doanleo\storeApp\obj\Debug\net6.0\storeApp.csproj.CoreCompileInputs.cache
+C:\Users\chain\Desktop\work\Week 1 Repo\P0-doanleo\storeApp\obj\Debug\net6.0\storeApp.dll
+C:\Users\chain\Desktop\work\Week 1 Repo\P0-doanleo\storeApp\obj\Debug\net6.0\refint\storeApp.dll
+C:\Users\chain\Desktop\work\Week 1 Repo\P0-doanleo\storeApp\obj\Debug\net6.0\storeApp.pdb
+C:\Users\chain\Desktop\work\Week 1 Repo\P0-doanleo\storeApp\obj\Debug\net6.0\storeApp.genruntimeconfig.cache
+C:\Users\chain\Desktop\work\Week 1 Repo\P0-doanleo\storeApp\obj\Debug\net6.0\ref\storeApp.dll
