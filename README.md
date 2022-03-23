@@ -26,8 +26,7 @@ Customer
 StoreFront
 Orders
 Product
-Note
-Add as much models as you would need for your design
+Note: Add as much models as you would need for your design
 
 ------------
 Additional requirements
@@ -50,3 +49,18 @@ Xunit
 SQLServer DB
 ADO.NET
 Serilog or Nlog (or any other logging frameworks)
+
+------------
+Notes:
+------------
+Use namespace to make a 'folder' of classes
+    BL
+
+    DL
+lists for now but database access later
+    Models
+classes based on each type mentioned above
+    UI
+Default program, and where main will be
+
+GOAL TOMORROW, set up all models and finish the first two menus
