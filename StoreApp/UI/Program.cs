@@ -1,3 +1,6 @@
-﻿using UI;
+﻿using Models;
+using BL;
+using DL;
+using UI;
 
-new MainMenu();
+new MainMenu().homeMenu();

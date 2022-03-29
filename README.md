@@ -5,6 +5,26 @@ Store App
 Overview
 The store app is a software that helps customers purchase products from your business. Designed with functionality that would make virtual shopping much simpler!
 
+
+------------
+TO-DO LIST
+------------
+user login validation
+clean up the following
+    inside username password i put temp vars 
+    set store on launch to default store
+Both store and order menus
+store, cart functions are adding to a list of orders
+orders contains product id and number of products and customer id
+
+check out doess nothing for now, but pushes to the database when done
+
+change store pulls up alist of stores
+
+restock asks for passcode then lets you choose a stock and then a number to incriment it by
+
+mark criteria below as complete
+
 ------------
 Functionality
 ------------
@@ -49,18 +69,3 @@ Xunit
 SQLServer DB
 ADO.NET
 Serilog or Nlog (or any other logging frameworks)
-
-------------
-Notes:
-------------
-Use namespace to make a 'folder' of classes
-    BL
-
-    DL
-lists for now but database access later
-    Models
-classes based on each type mentioned above
-    UI
-Default program, and where main will be
-
-GOAL TOMORROW, set up all models and finish the first two menus
