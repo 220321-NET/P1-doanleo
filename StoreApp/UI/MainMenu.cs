@@ -12,6 +12,7 @@ namespace UI
     {
         Customer currentUser = new Customer();
         List<Product> cart = new List<Product>();
+        List<Storefront> stores = new List<Storefront>();
         Storefront currentStore = new Storefront();
         public void homeMenu()
         {
@@ -126,23 +127,6 @@ namespace UI
                         break;
                 }
             } while (!menuExit);
-            /*
-                View Inventory 
-                    -> Select Location
-                        -> Restock Item (E)
-                            ->Access Granted (M)
-                        -> Add to Cart (C)
-                        -> Check Out (C)
-                        -> Remove From Cart (C)
-                View Order History (checks if customer or employee, 
-                    this method changes depending on which)
-                    -> Sort By (Both Ways)
-                        Location
-                        Date
-                        Cost
-                    -> Display Order Details
-                Logout, flushes currentUser
-            */
         }
 
         //Login Screen, WILL RETURN A CUSTOMER TO KEEP PERSISTENCE
@@ -292,7 +276,7 @@ namespace UI
                     case "0":
                         //You can get here even if you arent an employee so
                         //this is here to stop that
-                        if (isEmployee){restock();}
+                        if (isEmployee) { restock(); }
                         break;
                     case "1":
                         addToCart();
@@ -314,9 +298,20 @@ namespace UI
                         break;
                 }
             } while (!menuExit);
+            /*
+                View Inventory 
+                    -> Select Location
+                    -> Restock Item (E)
+                        ->Access Granted (M)
+                    -> Add to Cart (C)
+                    -> Check Out (C)
+                    -> Remove From Cart (C)
+            */
         }
         private void pullInventory()
         {
+            //pull store stock and add each selection into below
+            //id 
             Console.WriteLine("======================================");
             Console.WriteLine($"Name: Fuji  |Name: Gala  |Name: Mac   ");
             Console.WriteLine($"Price: $0.00|Price: $0.00|Price: $0.00");
@@ -331,29 +326,196 @@ namespace UI
         }
         private void restock()
         {
+        //Do I want to it to even have a password to allow this?
+        //idk check cust id and if it doesnt match ask for override?
+        AnotherOne:
             pullInventory();
+            Console.WriteLine("[#]: Which item would you like to restock?: ");
+            Console.WriteLine("[x]: Return to other Options");
+            //Input
+            string? input = Console.ReadLine();
+
+            //Menu Back End
+            //Later it'll check if its an item it can even incriment
+            switch (input)
+            {
+                case "1":
+                    Console.WriteLine("[#]: Incrimented Object 1");
+                    break;
+                case "2":
+                    Console.WriteLine("[#]: Incrimented Object 2");
+                    break;
+                case "3":
+                    Console.WriteLine("[#]: Incrimented Object 3");
+                    break;
+                case "4":
+                    Console.WriteLine("[#]: Incrimented Object 4");
+                    break;
+                case "5":
+                    Console.WriteLine("[#]: Incrimented Object 5");
+                    break;
+                case "6":
+                    Console.WriteLine("[#]: Incrimented Object 6");
+                    break;
+                case "x":
+                    break;
+                default:
+                    Console.WriteLine("[#]: Oops, Invalid Input! Try Again");
+                    break;
+            }
+
+        TryAgain:
+            Console.WriteLine("[#]: Would you like to restock another?: ");
+            Console.WriteLine("[1] Yes ");
+            Console.WriteLine("[2] No ");
+            string? retry = Console.ReadLine();
+            if (retry == "1")
+            {
+                goto AnotherOne;
+            }
+            else if (retry != "2")
+            {
+                Console.WriteLine("[#]: Oops, Invalid Input! Try Again");
+                goto TryAgain;
+            }
 
         }
         private void addToCart()
         {
-
+            //dont bother writing now, its gonna be a copy paste of the 
+            //restock with the switch and text changed
         }
         private void remFrCart()
         {
+            //REMOVE THIS CODE LATER
+            Product temp = new Product();
+            Product temp2 = new Product();
+            temp2.name = "removethis";
 
+            cart.Add(temp);
+            cart.Add(temp2);
+
+        AnotherOne:
+            Console.WriteLine("[#]: Here is your cart");
+            foreach (Product prod in cart)
+            {
+                Console.WriteLine($"[#]: {prod.name}");
+            }
+            Console.WriteLine("[#]: Enter the name of the product you want to remove");
+            string? input = Console.ReadLine();
+            bool found = false;
+            foreach (Product prod in cart)
+            {
+                if (input == prod.name)
+                {
+                    //maybe make it not case sensitive
+                    cart.Remove(prod);
+                    found = true;
+                    Console.WriteLine($"[#]: Product: {prod.name} removed.");
+                    break;
+                }
+            }
+            if (!found)
+            {
+                Console.WriteLine("[#]: Product not found");
+            }
+
+        TryAgain:
+            Console.WriteLine("[#]: Would you like to remove another?: ");
+            Console.WriteLine("[1] Yes ");
+            Console.WriteLine("[2] No ");
+
+            string? retry = Console.ReadLine();
+            if (retry == "1")
+            {
+                goto AnotherOne;
+            }
+            else if (retry != "2")
+            {
+                Console.WriteLine("[#]: Oops, Invalid Input! Try Again");
+                goto TryAgain;
+            }
         }
         private void checkout()
         {
-
+            //calls a BL function to update the store's stock
+            //adds the order 
+            //idk how imma write this rn
         }
         private void jumpStores()
         {
+            //creates a list of stores, puts a flag on the store id you're at rn
+            //
+            //REMOVE THIS CODE LATER
+            Storefront temp1 = new Storefront();
+            Storefront temp2 = new Storefront();
+            Storefront temp3 = new Storefront();
+            Storefront temp4 = new Storefront();
+            temp1.storeName = "test 1";
+            temp2.storeName = "test 2";
+            temp3.storeName = "test 3";
+            temp4.storeName = "Apple Superstore";
+            stores.Add(temp1);
+            stores.Add(temp2);
+            stores.Add(temp4);
+            stores.Add(temp3);
 
+            Console.WriteLine("\n\n\n\n\n======================================");
+            Console.WriteLine($"[#]: You are at: {currentStore.storeName}");
+            Console.WriteLine("[#]: Here is a list of our stores");
+            Console.WriteLine("======================================");
+            foreach (Storefront store in stores)
+            {
+                string output = $"[#]: {store.storeName}";
+                if (store.storeName == currentStore.storeName)
+                {
+                    output += "<-- YOU ARE HERE";
+                }
+                Console.WriteLine(output);
+            }
+        TryAgain:
+            Console.WriteLine("[#]: Enter the name of the store you would like to go to");
+            string? input = Console.ReadLine();
+            bool found = false;
+            foreach (Storefront store in stores)
+            {
+                if (input == store.storeName)
+                {
+                    found = true;
+                    Console.WriteLine($"[#]: Moving to {store.storeName}.");
+                    currentStore = store;
+                    break;
+                }
+            }
+            if (!found)
+            {
+                Console.WriteLine("[#]: Store not found");
+                goto TryAgain;
+            }
         }
         //viewOrders methods
         private void viewOrders(bool isEmployee)
         {
             bool accessGranted = isEmployee;
+
+            // if employee go to viewStoreOrders(string sort)
+            // if customer go to viewCustOrders(string sort)
+            // display with a default search then give sort options, 
+
+            bool menuExit = false;
+            do{
+
+            }while(!menuExit);
+
+            /*
+                View Order History (checks if customer or employee, 
+                    this method changes depending on which)
+                    -> Sort By (Both Ways)
+                        Location
+                        Date
+                        Cost
+                    -> Display Order Details
+            */
         }
     }
 }
