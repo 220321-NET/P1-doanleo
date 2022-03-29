@@ -5,6 +5,7 @@ Store App
 Overview
 The store app is a software that helps customers purchase products from your business. Designed with functionality that would make virtual shopping much simpler!
 
+password to the db is appleRemote1
 
 ------------
 TO-DO LIST
@@ -13,15 +14,31 @@ user login validation
 clean up the following
     inside username password i put temp vars 
     set store on launch to default store
-Both store and order menus
-store, cart functions are adding to a list of orders
+    the temp stuff in rem, and store change
+order menus
 orders contains product id and number of products and customer id
 
-check out doess nothing for now, but pushes to the database when done
+check out does nothing for now, but pushes to the database when done?
 
-change store pulls up alist of stores
+            /*
+                View Inventory 
+                    -> Select Location
+                        -> Restock Item (E)
+                            ->Access Granted (M)
+                        -> Add to Cart (C)
+                        -> Check Out (C)
+                        -> Remove From Cart (C)
+                View Order History (checks if customer or employee, 
+                    this method changes depending on which)
+                    -> Sort By (Both Ways)
+                        Location
+                        Date
+                        Cost
+                    -> Display Order Details
+                Logout, flushes currentUser
+            */
 
-restock asks for passcode then lets you choose a stock and then a number to incriment it by
+restock login verification?
 
 mark criteria below as complete
 
