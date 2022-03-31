@@ -1,20 +1,20 @@
 namespace UI
 {
-    public class MainMenu : IMenu
+    public class StoreMenu : IMenu
     {
         public void Start()
         {
             bool menuExit = false;
+            //Menu Front End
             do
             {
-                //Menu Front End
                 Console.WriteLine("\n\n\n\n\n======================================");
-                Console.WriteLine("[#]: Welcome to the Apple Store");
-                Console.WriteLine("[#]: Log in or Create an Account to continue: ");
+                Console.WriteLine($"[#]: Welcome to the Apple Store, User: {c.cCust.username} {c.cCust.isEmployee}");
+                Console.WriteLine("[#]: Select an Option: ");
                 Console.WriteLine("======================================");
-                Console.WriteLine("[1]: Log In");
-                Console.WriteLine("[2]: Create an Account");
-                Console.WriteLine("[x]: Exit");
+                Console.WriteLine("[1]: View Items in Stock");
+                Console.WriteLine("[2]: View Order History");
+                Console.WriteLine("[x]: Log out, return to Main Menu");
                 Console.WriteLine("======================================");
 
                 //Input
@@ -24,15 +24,19 @@ namespace UI
                 switch (input)
                 {
                     case "1":
-                        new MenuFactory().gotoMenu("login").Start();
+                        //viewItems(cCust.isEmployee);
+                        new MenuFactory().gotoMenu("item").Start();
                         break;
                     case "2":
-                        new MenuFactory().gotoMenu("signup").Start();
+                        //viewOrders(cCust.isEmployee);
+                        new MenuFactory().gotoMenu("order").Start();
+                        break;
+                    case "3":
+                        c.cCust.isEmployee = true;
                         break;
                     case "x":
-                        Console.WriteLine("\n\n\n\n\n======================================");
-                        Console.WriteLine("[#]: Thank you for your patronage\n[#]: Come back soon!");
-                        Console.WriteLine("======================================");
+                        c.cCust = new Customer();
+                        //Removes the current customer and sets it to the default
                         menuExit = true;
                         break;
                     default:

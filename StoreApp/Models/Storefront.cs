@@ -5,11 +5,8 @@ namespace Models
         /*
             Name, Store ID, Manager ID
         */
-        public string storeName {get; set;}
-
-        public Storefront(){
-            storeName = "Apple Superstore";
-
-        }
-    }
+        public int StoreID { get; set; }
+        public string StoreName { get; set; } = "default store";
+        public string ManagerPass  { get; set; } = "1234";
+    } 
 }

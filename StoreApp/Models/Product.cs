@@ -5,15 +5,10 @@ namespace Models
         /*
         Product ID, Product Name, Cost
         */
-        public int ID { get; set; }
-        public string name { get; set; }
-        public double cost { get; set; }
+        public int ProdID { get; set; }
+        public string ProdName { get; set; } = "Apple";
+        public double ProdCost { get; set; }
 
-        public Product(){
-            ID = 0;
-            name = "product";
-            cost = 0.01;
-        }
 
     }
 }

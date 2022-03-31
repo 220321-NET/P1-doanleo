@@ -3,13 +3,20 @@ P0 Requirements Due April 6th 2022
 
 Store App
 Overview
-The store app is a software that helps customers purchase products from your business. Designed with functionality that would make virtual shopping much simpler!
+The store app is a software that helps customers purchase products fro
+m your business. Designed with functionality that would make virtual shopping much simpler!
 
 password to the db is appleRemote1
 
 ------------
 TO-DO LIST
 ------------
+facotry design 
+https://www.tutorialspoint.com/design_pattern/factory_pattern.htm
+make a static class for current cust cart and location
+
+lookinto sqlcommandbuilder
+
 user login validation
 clean up the following
     inside username password i put temp vars 
@@ -39,6 +46,7 @@ check out does nothing for now, but pushes to the database when done?
             */
 
 restock login verification?
+
 
 mark criteria below as complete
 
