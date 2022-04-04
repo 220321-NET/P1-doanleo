@@ -19,7 +19,7 @@ namespace UI
                 string output = $"[#]: {store.StoreName}";
                 if (store.StoreName == c.cStore.StoreName)
                 {
-                    output += "<-- YOU ARE HERE";
+                    output += " <-- YOU ARE HERE";
                 }
                 Console.WriteLine(output);
             }

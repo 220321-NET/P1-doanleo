@@ -1,4 +1,5 @@
 using Microsoft.Data.SqlClient;
+using System.Data;
 
 namespace DL
 {
@@ -12,99 +13,275 @@ namespace DL
 
         public int addCustomer(Customer cust)
         {
-            //insert into customers (username, password) values cust.username, cust.password
-            //select custid from customers where username = username and password = password
-            return 0;
+            using SqlConnection conn = new SqlConnection(_connectionString);
+            conn.Open();
+            using SqlCommand cmd = new SqlCommand("INSERT INTO Customers (username, password) VALUES (@user, @pass)", conn);
+            cmd.Parameters.AddWithValue("@user", cust.username);
+            cmd.Parameters.AddWithValue("@pass", cust.password);
+
+            cmd.ExecuteNonQuery();
+
+            conn.Close();
+            return getID(cust);
         }
 
         public void addOrder(Storefront store, Customer cust, List<Product> cart)
         {
             int orderNum = 0;
-            //select max(ordernum) from order and set to ordernum
-            //insert into order make a loop for every cart item
+            using SqlConnection conn = new SqlConnection(_connectionString);
+            conn.Open();
+            string pullString = "SELECT MAX(OrderNum) FROM Orders";
+            using SqlCommand pull = new SqlCommand(pullString, conn);
+            using SqlDataReader reader = pull.ExecuteReader();
+            while (reader.Read())
+            {
+                orderNum = reader.GetInt32(0) + 1;
+            }
+            reader.Close();
+            Dictionary<Product, int> d = new Dictionary<Product, int>();
+            foreach (Product prod in cart)
+            {
+                if (d.ContainsKey(prod))
+                {
+                    d[prod] = d[prod] + 1;
+                }
+                else
+                {
+                    d.Add(prod, 1);
+                }
+            }
+            
+            foreach (var prod in d)
+            {
+                string insert = "INSERT INTO Orders (OrderNum, ProductID, NumberOrdered, CustomerID, StoreID, OrderTotal) VALUES (@on, @pid, @pord, @cid, @sid, @total)";
+                using SqlCommand cmd = new SqlCommand(insert, conn);
+                cmd.Parameters.AddWithValue("@pid", prod.Key.ProdID);
+                cmd.Parameters.AddWithValue("@on", orderNum);
+                cmd.Parameters.AddWithValue("@pord", prod.Value);
+                cmd.Parameters.AddWithValue("@cid", cust.CustID);
+                cmd.Parameters.AddWithValue("@sid", store.StoreID);
+                double doub = (prod.Value * prod.Key.ProdCost);
+                cmd.Parameters.AddWithValue("@total", Convert.ToDecimal(doub));
+                cmd.ExecuteNonQuery();
+            }
         }
 
         public List<Order> GetStoreOrders(Storefront store, string sort, bool ascDesc)
         {
             //select * from orders where store = store.storename sort by sort ascdesc
-            return new List<Order>();
+            List<Order> o = new List<Order>();
+            using SqlConnection conn = new SqlConnection(_connectionString);
+            conn.Open();
+            string sql = "SELECT OrderID, OrderNum, Stores.StoreName, Customers.username, Products.ProductName, NumberOrdered, OrderTotal FROM Orders JOIN Stores ON Orders.StoreID = Stores.StoreID JOIN Products on Orders.ProductID = Products.ProductID JOIN Customers  on Orders.CustomerID = Customers.CustID WHERE Orders.StoreID = @id ORDER BY ";
+
+            string SORTBY = "ASC";
+            if (ascDesc) { SORTBY = "DESC"; }
+            sql = sql + sort + " " + SORTBY;
+            using SqlCommand cmd = new SqlCommand(sql, conn);
+            cmd.Parameters.AddWithValue("@id", store.StoreID);
+
+            using SqlDataReader reader = cmd.ExecuteReader();
+            while (reader.Read())
+            {
+                int oid = reader.GetInt32(0);
+                int onum = reader.GetInt32(1);
+                string os = reader.GetString(2);
+                string oc = reader.GetString(3);
+                string op = reader.GetString(4);
+                int ordered = reader.GetInt32(5);
+                double ot = decimal.ToDouble(reader.GetDecimal(6));
+
+                Order ord = new Order();
+                ord.OrderID = oid;
+                ord.OrderNum = onum;
+                ord.OrderAmount = ordered;
+                ord.OrderTotalCost = ot;
+                ord.OrderProduct = op;
+                ord.OrderStore = os;
+                ord.OrderCust = oc;
+
+                o.Add(ord);
+            }
+            reader.Close();
+            conn.Close();
+
+            return o;
         }
 
         public List<Order> GetCustOrders(Customer cust, string sort, bool ascDesc)
         {
             //select * from orders where cust= cust name sort by sort ascdesc
-            return new List<Order>();
+            List<Order> o = new List<Order>();
+            using SqlConnection conn = new SqlConnection(_connectionString);
+            conn.Open();
+            string sql = "SELECT OrderID, OrderNum, Stores.StoreName, Customers.username, Products.ProductName, NumberOrdered, OrderTotal FROM Orders JOIN Stores ON Orders.StoreID = Stores.StoreID JOIN Products on Orders.ProductID = Products.ProductID JOIN Customers  on Orders.CustomerID = Customers.CustID WHERE Orders.CustomerID = @id ORDER BY ";
+            string SORTBY = "ASC";
+            if (ascDesc) { SORTBY = "DESC"; }
+            sql = sql + sort + " " + SORTBY;
+            using SqlCommand cmd = new SqlCommand(sql, conn);
+            cmd.Parameters.AddWithValue("@id", cust.CustID);
+
+            using SqlDataReader reader = cmd.ExecuteReader();
+            while (reader.Read())
+            {
+                int oid = reader.GetInt32(0);
+                int onum = reader.GetInt32(1);
+                string os = reader.GetString(2);
+                string oc = reader.GetString(3);
+                string op = reader.GetString(4);
+                int ordered = reader.GetInt32(5);
+                double ot = decimal.ToDouble(reader.GetDecimal(6));
+
+                Order ord = new Order();
+                ord.OrderID = oid;
+                ord.OrderNum = onum;
+                ord.OrderAmount = ordered;
+                ord.OrderTotalCost = ot;
+                ord.OrderProduct = op;
+                ord.OrderStore = os;
+                ord.OrderCust = oc;
+
+                o.Add(ord);
+            }
+            reader.Close();
+            conn.Close();
+
+            return o;
         }
 
         public List<Product> GetStock(Storefront store)
         {
             List<Product> stock = new List<Product>();
-            /*
-            Select Stores.StoreName, Products.ProductName, Products.ProductCost, Stock from StoreStock
-            join Stores on Storestock.Storeid = stores.StoreID
-            join Products on storestock.ProductID = products.productid
-            Where StoreName = 'The Apple Store'
-            */
+            using SqlConnection conn = new SqlConnection(_connectionString);
+            conn.Open();
+            using SqlCommand cmd = new SqlCommand("SELECT StoreID, Products.ProductID, Products.ProductName, Products.ProductCost, Stock FROM StoreStock JOIN Products ON Storestock.ProductID =Products.ProductID WHERE StoreID = @sID", conn);
+            cmd.Parameters.AddWithValue("@sID", store.StoreID);
+            using SqlDataReader reader = cmd.ExecuteReader();
+            while (reader.Read())
+            {
+                int id = reader.GetInt32(1);
+                string name = reader.GetString(2);
+                decimal cost = reader.GetDecimal(3);
+                int iStock = reader.GetInt32(4);
+
+                Product item = new Product();
+                item.ProdID = id;
+                item.ProdName = name;
+                item.ProdCost = decimal.ToDouble(cost);
+                item.ProdStock = iStock;
+
+                stock.Add(item);
+            }
+            reader.Close();
+            conn.Close();
             return stock;
         }
 
         public List<Storefront> GetStores()
         {
-            //select * from stores;
-            return new List<Storefront>();
+            List<Storefront> stores = new List<Storefront>();
+            using SqlConnection conn = new SqlConnection(_connectionString);
+            conn.Open();
+            using SqlCommand cmd = new SqlCommand("SELECT * FROM Stores", conn);
+            using SqlDataReader reader = cmd.ExecuteReader();
+            while (reader.Read())
+            {
+                int id = reader.GetInt32(0);
+                string name = reader.GetString(1);
+
+                Storefront store = new Storefront();
+                store.StoreID = id;
+                store.StoreName = name;
+
+                stores.Add(store);
+            }
+            reader.Close();
+            conn.Close();
+            return stores;
         }
 
         public bool loginCheck(Customer cust)
         {
-            //only checks if username and password match then returns yes or not
-            return true;
+            bool found = false;
+            using SqlConnection conn = new SqlConnection(_connectionString);
+            conn.Open();
+            using SqlCommand cmd = new SqlCommand("SELECT * FROM Customers WHERE username = @user AND password = @pass", conn);
+            cmd.Parameters.AddWithValue("@user", cust.username);
+            cmd.Parameters.AddWithValue("@pass", cust.password);
+
+            SqlDataReader reader = cmd.ExecuteReader();
+            if (reader.HasRows)
+            {
+                found = true;
+            }
+            reader.Close();
+            conn.Close();
+            return found;
+        }
+
+        public int getID(Customer cust)
+        {
+            int id = -1;
+
+            using SqlConnection conn = new SqlConnection(_connectionString);
+            conn.Open();
+            using SqlCommand cmd = new SqlCommand("SELECT * FROM Customers WHERE username = @user AND password = @pass", conn);
+            cmd.Parameters.AddWithValue("@user", cust.username);
+            cmd.Parameters.AddWithValue("@pass", cust.password);
+
+            SqlDataReader reader = cmd.ExecuteReader();
+            while (reader.Read())
+            {
+                id = reader.GetInt32(0);
+            }
+            reader.Close();
+            conn.Close();
+            return id;
         }
 
         public void restock(Storefront store, Product item, int howMany)
         {
-            //select stock and store it to a number
-            //update stock from storestock where
+            using SqlConnection conn = new SqlConnection(_connectionString);
+            conn.Open();
+            using SqlCommand cmd = new SqlCommand("SELECT Stock FROM StoreStock WHERE StoreID = @sID AND ProductID = @pID", conn);
+            cmd.Parameters.AddWithValue("@sID", store.StoreID);
+            cmd.Parameters.AddWithValue("@pID", item.ProdID);
+            int stock = 0;
+            SqlDataReader reader = cmd.ExecuteReader();
+            while (reader.Read())
+            {
+                stock = reader.GetInt32(0);
+            }
+            reader.Close();
+            stock = stock + howMany;
+            SqlCommand upd = new SqlCommand("UPDATE StoreStock SET Stock = @stock WHERE StoreID = @sID AND ProductID = @pID", conn);
+            upd.Parameters.AddWithValue("@stock", stock);
+            upd.Parameters.AddWithValue("@sID", store.StoreID);
+            upd.Parameters.AddWithValue("@pID", item.ProdID);
+            upd.ExecuteNonQuery();
+            conn.Close();
         }
         public void addToCart(Storefront store, Product item, int howMany)
         {
-            //same
-        }
-
-        public void sample()
-        {
-            //this is my sample to use for later
-
-            //Add connection
-            SqlConnection conn = new SqlConnection(_connectionString);
-            //Open Connection
+            using SqlConnection conn = new SqlConnection(_connectionString);
             conn.Open();
-            //query
-            string command = "SELECT * FROM thing";
-            SqlCommand cmd = new SqlCommand(command, conn);
-
+            using SqlCommand cmd = new SqlCommand("SELECT Stock FROM StoreStock WHERE StoreID = @sID AND ProductID = @pID", conn);
+            cmd.Parameters.AddWithValue("@sID", store.StoreID);
+            cmd.Parameters.AddWithValue("@pID", item.ProdID);
+            int stock = 0;
             SqlDataReader reader = cmd.ExecuteReader();
-            while (reader.HasRows) // iterates through each row
-            //keeps reading while theres rows or results
+            while (reader.Read())
             {
-                int id = reader.GetInt32(0);
-                //type name = reader.Gettype(column number);
+                stock = reader.GetInt32(0);
             }
-
-            cmd = new SqlCommand("INSERT INTO database (Pameter, Parameter, Paramentr) VALUES (@param, @param, @param)", conn);
-            SqlParameter typeParam = new SqlParameter("@param", DateTime.Now);
-            cmd.Parameters.Add(typeParam);
-            cmd.Parameters.AddWithValue("@param", DateTime.Now);
-            cmd.ExecuteNonQuery();
-            //next
-            reader.Close(); //kills reader object
-            conn.Close(); //closes connection to db to prevent mem leak
+            reader.Close();
+            stock = stock - howMany;
+            SqlCommand upd = new SqlCommand("UPDATE StoreStock SET Stock = @stock WHERE StoreID = @sID AND ProductID = @pID", conn);
+            upd.Parameters.AddWithValue("@stock", stock);
+            upd.Parameters.AddWithValue("@sID", store.StoreID);
+            upd.Parameters.AddWithValue("@pID", item.ProdID);
+            upd.ExecuteNonQuery();
+            conn.Close();
         }
-        public void dcSample()
-        {
-
-
-        }
-
-
     }
 }

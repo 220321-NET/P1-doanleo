@@ -69,12 +69,12 @@ namespace UI
         private void restock(int index)
         {
         AnotherOne:
-            Console.WriteLine($"[#]: How many {c.cStock[index].ProdName} would you like?");
+            Console.WriteLine($"[#]: How many {c.cStock[index-1].ProdName} would you like to restock?");
             string? num = Console.ReadLine();
             int howMany = 0;
             if (Int32.TryParse(num, out howMany))
             {
-                _bl.restock(c.cStore, c.cStock[index], howMany);
+                _bl.restock(c.cStore, c.cStock[index-1], howMany);
             }
             else
             {

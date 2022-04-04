@@ -14,21 +14,26 @@ namespace UI
             // if employee go to viewStoreOrders(string sort)
             // if customer go to viewCustOrders(string sort)
             // display with a default search then give sort options, 
-
+            bool ascDesc = true;
             bool menuExit = false;
             do
             {
                 int count = getOrderCount(accessGranted);
+                if (count == 0)
+                {
+                    Console.WriteLine("[#]: You have no Orders");
+                    menuExit = true;
+                }
                 //flag if ascending or desc, true = asc 
-                bool ascDesc = true;
+
                 //Menu Front End
                 Console.WriteLine("\n\n\n\n\n======================================");
-                Console.WriteLine("[#]: Select how to sort it");
+                Console.WriteLine($"[#]: How do you want to Sort By? {ascDesc}");
                 if (accessGranted) { Console.WriteLine($"[#]: Store: {c.cStore.StoreName} | Orders: {count}"); }
                 if (!accessGranted) { Console.WriteLine($"[#]: User: {c.cCust.username} | Orders: {count}"); }
                 Console.WriteLine("======================================");
                 Console.WriteLine("[1]: Sort By Order Number");
-                Console.WriteLine("[2]: Sort By Order Cost");
+                Console.WriteLine("[2]: Sort By Order Total");
                 if (accessGranted) { Console.WriteLine("[3]: Sort By Customer"); }
                 if (!accessGranted) { Console.WriteLine("[3]: Sort By Store"); }
                 if (accessGranted) { Console.WriteLine("[4]: Change Store"); }
@@ -44,22 +49,22 @@ namespace UI
                 switch (input)
                 {
                     case "1":
-                        viewOrder(accessGranted, "OrderNum", ascDesc);
+                        viewOrder(accessGranted, "Orders.OrderNum", ascDesc);
                         ascDesc = !ascDesc;
                         break;
                     case "2":
-                        viewOrder(accessGranted, "OrderCost", ascDesc);
+                        viewOrder(accessGranted, "Orders.OrderTotal", ascDesc);
                         ascDesc = !ascDesc;
                         break;
                     case "3":
                         if (accessGranted)
                         {
-                            viewOrder(accessGranted, "CustomerID", ascDesc);
+                            viewOrder(accessGranted, "Orders.CustomerID", ascDesc);
                             ascDesc = !ascDesc;
                         }
                         if (!accessGranted)
                         {
-                            viewOrder(accessGranted, "StoreID", ascDesc);
+                            viewOrder(accessGranted, "Orders.StoreID", ascDesc);
                             ascDesc = !ascDesc;
                         }
                         break;
@@ -92,23 +97,26 @@ namespace UI
         private void viewOrder(bool isE, string sort, bool ascDesc)
         {
             string sorted = "/\\";
-            if (!ascDesc){sorted = "\\/";}
-            Console.WriteLine($"[#]: Sorting by {sort}{sorted}");
+            if (!ascDesc) { sorted = "\\/"; }
+            Console.WriteLine($"[#]: Sorting by {sort} {sorted}");
             List<Order> oList = new List<Order>();
-            if(isE){
+            if (isE)
+            {
                 oList = _bl.GetStoreOrders(c.cStore, sort, ascDesc);
-            } else {
+            }
+            else
+            {
                 oList = _bl.GetCustOrders(c.cCust, sort, ascDesc);
             }
-            foreach(Order o in oList){
+            foreach (Order o in oList)
+            {
                 Console.WriteLine(o);
             }
-            Console.ReadKey();
         }
         private int getOrderCount(bool isE)
         {
             int count = 0;
-            string sorter = "id";
+            string sorter = "Orders.OrderID";
             if (isE)
             {
                 count = _bl.GetStoreOrders(c.cStore, sorter, false).Count;

@@ -10,6 +10,5 @@ namespace Models
         public double ProdCost { get; set; }
         public int ProdStock { get; set; } = 0;
 
-
     }
 }

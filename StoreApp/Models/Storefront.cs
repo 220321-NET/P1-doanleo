@@ -5,8 +5,7 @@ namespace Models
         /*
             Name, Store ID, Manager ID
         */
-        public int StoreID { get; set; }
-        public string StoreName { get; set; } = "default store";
-        public string ManagerPass  { get; set; } = "1234";
+        public int StoreID { get; set; } = 1;
+        public string StoreName { get; set; } = "The Apple Store";
     } 
 }

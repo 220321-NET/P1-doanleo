@@ -29,12 +29,32 @@ namespace UI
             }
             foreach (var prod in d)
             {
-                Console.WriteLine($"[#]: {prod.Key.ProdName} | {prod.Value} | ${prod.Key.ProdCost}");
+                Console.WriteLine($"[#]: {prod.Key.ProdName} | {prod.Value} x ${prod.Key.ProdCost} = ${String.Format("{0:0.00}",prod.Value * prod.Key.ProdCost)}");
             }
             Console.WriteLine("[#]: Enter the name of the product you want to remove");
             string? input = Console.ReadLine();
+            //find the product to restock
+            int pos = 0;
+            for (int i = 0; i < c.cStock.Count; i++){
+                if (c.cStock[i].ProdName == input){
+                    pos = i;
+                    break;
+                }
+            }
+            //find how much to restock
+            int num = 0;
+            foreach (var prod in d){
+                if(prod.Key.ProdName == c.cStock[pos].ProdName){
+                    num = prod.Value;
+                }
+            }
+            //restock it
+            _bl.restock(c.cStore, c.cStock[pos], num);
+            //remove from cart
             c.cCart.RemoveAll(a => a.ProdName == input);
             Console.WriteLine($"[#]: Product {input} has been removed.");
+        
+        
         TryAgain:
             if (c.cCart.Count < 1){
                 goto End;

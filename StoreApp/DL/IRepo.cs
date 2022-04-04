@@ -57,7 +57,7 @@ namespace DL
         /// <param name="item">Item to incriment</param>
         /// <param name="howMany">Number to incriment by</param>
         public void restock(Storefront store, Product item, int howMany);
-        
+
         /// <summary>
         /// Decrement to the stock of an item within a store
         /// </summary>
@@ -73,5 +73,13 @@ namespace DL
         /// <param name="cust"> user to authenticate</param>
         /// <returns>true if successful, false if failed</returns>
         public bool loginCheck(Customer cust);
+                
+        /// <summary>
+        /// Used after loginCheck, returns id
+        /// </summary>
+        /// <param name="cust">Customer Info</param>
+        /// <returns>Customer's ID</returns>
+        public int getID(Customer cust);
+
     }
 }

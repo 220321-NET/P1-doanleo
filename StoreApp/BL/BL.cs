@@ -49,5 +49,10 @@ namespace BL
         {
             _repo.restock(store, item, howMany);
         }
+
+        public int getID(Customer cust)
+        {
+            return _repo.getID(cust);
+        }
     }
 }

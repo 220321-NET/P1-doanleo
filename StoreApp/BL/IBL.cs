@@ -16,5 +16,6 @@ namespace BL
         public void addToCart(Storefront store, Product item, int howMany);
         //Authenticate from DB
         public bool loginCheck(Customer cust);
+        public int getID(Customer cust);
     }
 }

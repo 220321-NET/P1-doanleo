@@ -61,6 +61,7 @@ namespace UI
                             if (retry == "1")
                             {
                                 clearCart();
+                                menuExit = true;
                             }
                             else if (retry != "2")
                             {
@@ -88,6 +89,7 @@ namespace UI
             double total = 0;
             foreach (Product prod in c.cCart)
             {
+                total += prod.ProdCost;
                 if (d.ContainsKey(prod))
                 {
                     d[prod] = d[prod] + 1;
@@ -99,13 +101,13 @@ namespace UI
             }
             foreach (var prod in d)
             {
-                total += prod.Key.ProdCost;
-                Console.WriteLine($"[#]: {prod.Key.ProdName} | {prod.Value} | ${prod.Key.ProdCost}");
+                
+                Console.WriteLine($"[#]: {prod.Key.ProdName} | {prod.Value} x ${prod.Key.ProdCost} = ${String.Format("{0:0.00}",prod.Value * prod.Key.ProdCost)}");
             }
             Console.WriteLine("======================================");
         TryAgain:
             Console.WriteLine("[#]: Would you like to check out?");
-            Console.WriteLine($"[#]: Total: ${total.ToString()}");
+            Console.WriteLine($"[#]: Total: ${String.Format("{0:0.00}", total)}");
             Console.WriteLine("[1]: Yes ");
             Console.WriteLine("[2]: No ");
             string? retry = Console.ReadLine();
@@ -123,9 +125,21 @@ namespace UI
         }
         private void clearCart()
         {
-            foreach (Product item in c.cCart)
+            Dictionary<Product, int> d = new Dictionary<Product, int>();
+            foreach (Product prod in c.cCart)
             {
-                _bl.restock(c.cStore, item, 1);
+                if (d.ContainsKey(prod))
+                {
+                    d[prod] = d[prod] + 1;
+                }
+                else
+                {
+                    d.Add(prod, 1);
+                }
+            }
+            foreach (var prod in d)
+            {
+                _bl.restock(c.cStore, prod.Key, prod.Value);
             }
             c.cCart = new List<Product>();
         }

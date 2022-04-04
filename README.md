@@ -12,31 +12,10 @@ password to the db is appleRemote1
 TO-DO LIST
 ------------
 
-
-TODO TODAY
-
-add to cart function in irepo just removes an items stock, doesnt care if it goes negative
-
-Select Stores.StoreName, Products.ProductName, Products.ProductCost, Stock from StoreStock
-join Stores on Storestock.Storeid = stores.StoreID
-join Products on storestock.ProductID = products.productid
-Where StoreName = 'The Apple Store'
-Order by productCost;
-
-
-BEGIN SQL STATEMENTS
-
-
-
-remcart might be broken
 make all the close menus's X rather than x or 2
-
 clean up spacing,
 make a ascii logo?
-
-
-lookinto sqlcommandbuilder
-    set store on launch to default store
+set store on launch to default store
 mark criteria below as complete
 
 ------------
