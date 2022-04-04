@@ -5,46 +5,67 @@ namespace DL
     /// </summary>
     public interface IRepo
     {
-        //Get From DB
         /// <summary>
         /// Gets a list of all the stores
         /// </summary>
         /// <returns>A list of StoreFronts</returns>
         List<Storefront> GetStores();
+
         /// <summary>
         /// Gets a list of the stock within a store
         /// </summary>
         /// <param name="store">The StoreFront Object you wish to access the inventory of</param>
         /// <returns>A List of the store stock</returns>
         List<Product> GetStock(Storefront store);
-        /// <summary>
-        /// Get a list of the Orders
-        /// </summary>
-        /// <param name="isEmployee">True/False flag from Customer</param>
-        /// <returns>List of orders</returns>
-        List<Order> GetOrders(bool isEmployee);
 
-        //Add to DB
+        /// <summary>
+        /// Gets a list of Orders given the store
+        /// </summary>
+        /// <param name="store">The store you want to look at</param>
+        /// <param name="sort">Order by string</param>
+        /// <param name="ascDesc">Sort by Ascending or Descending</param>
+        /// <returns>List of orders from a given store</returns>
+        List<Order> GetStoreOrders(Storefront store, string sort, bool ascDesc);
+
+        /// <summary>
+        /// Gets the list of orders by a customer
+        /// </summary>
+        /// <param name="cust">Customer</param>
+        /// <param name="sort">Order by string</param>
+        /// <param name="ascDesc">Sort by Ascending or Descending</param>
+        /// <returns>List of orders tied to a customer</returns>
+        List<Order> GetCustOrders(Customer cust, string sort, bool ascDesc);
+
         /// <summary>
         /// Adds an order by inputing the cart into orders
         /// </summary>
+        /// <param name="store">Store bought from</param>
+        /// <param name="cust">Customer who bought</param>
         /// <param name="cart">List of product purchased</param>
-        public void addOrder(List<Product> cart);
+        public void addOrder(Storefront store, Customer cust, List<Product> cart);
+
         /// <summary>
-        /// Add a customer to the database
+        /// Add a customer to the database, and returns their ID
         /// </summary>
         /// <param name="cust">Customer information</param>
         public int addCustomer(Customer cust);
 
-        //Update DB
         /// <summary>
         /// Incriments to the stock of an item within a store
         /// </summary>
         /// <param name="store">Store to access inventory</param>
         /// <param name="item">Item to incriment</param>
         /// <param name="howMany">Number to incriment by</param>
-        /// <returnReturns the customers IDk</returns>
         public void restock(Storefront store, Product item, int howMany);
+        
+        /// <summary>
+        /// Decrement to the stock of an item within a store
+        /// </summary>
+        /// <param name="store">Store to access inventory</param>
+        /// <param name="item">Item to decrement</param>
+        /// <param name="howMany">Number to decrement by</param>
+        public void addToCart(Storefront store, Product item, int howMany);
+
         //Authenticate from DB
         /// <summary>
         /// Authenticates if a customer is in their database

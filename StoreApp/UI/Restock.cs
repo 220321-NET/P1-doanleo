@@ -1,13 +1,20 @@
 namespace UI
 {
+
     public class Restock : IMenu
     {
+        private readonly IBL _bl;
+        public Restock(IBL bl)
+        {
+            _bl = bl;
+        }
         public void Start()
         {
         //Do I want to it to even have a password to allow this?
         //idk check cust id and if it doesnt match ask for override?
         AnotherOne:
             new MenuFactory().gotoMenu("stock").Start();
+            List<Product> stock = _bl.GetStock(c.cStore);
             Console.WriteLine("[#]: Which item would you like to restock?: ");
             Console.WriteLine("[x]: Return to other Options");
             //Input
@@ -18,25 +25,25 @@ namespace UI
             switch (input)
             {
                 case "1":
-                    Console.WriteLine("[#]: Incrimented Object 1");
+                    restock(1);
                     break;
                 case "2":
-                    Console.WriteLine("[#]: Incrimented Object 2");
+                    restock(2);
                     break;
                 case "3":
-                    Console.WriteLine("[#]: Incrimented Object 3");
+                    restock(3);
                     break;
                 case "4":
-                    Console.WriteLine("[#]: Incrimented Object 4");
+                    restock(4);
                     break;
                 case "5":
-                    Console.WriteLine("[#]: Incrimented Object 5");
+                    restock(5);
                     break;
                 case "6":
-                    Console.WriteLine("[#]: Incrimented Object 6");
+                    restock(6);
                     break;
                 case "x":
-                    break;
+                    goto End;
                 default:
                     Console.WriteLine("[#]: Oops, Invalid Input! Try Again");
                     break;
@@ -55,6 +62,36 @@ namespace UI
             {
                 Console.WriteLine("[#]: Oops, Invalid Input! Try Again");
                 goto TryAgain;
+            }
+        End:
+            Console.WriteLine("");
+        }
+        private void restock(int index)
+        {
+        AnotherOne:
+            Console.WriteLine($"[#]: How many {c.cStock[index].ProdName} would you like?");
+            string? num = Console.ReadLine();
+            int howMany = 0;
+            if (Int32.TryParse(num, out howMany))
+            {
+                _bl.restock(c.cStore, c.cStock[index], howMany);
+            }
+            else
+            {
+            TryAgain:
+                Console.WriteLine("[#]: Oops, Invalid Input! Try Again?");
+                Console.WriteLine("[1]: Yes ");
+                Console.WriteLine("[2]: No ");
+                string? retry = Console.ReadLine();
+                if (retry == "1")
+                {
+                    goto AnotherOne;
+                }
+                else if (retry != "2")
+                {
+                    Console.WriteLine("[#]: Oops, Invalid Input! Try Again");
+                    goto TryAgain;
+                }
             }
         }
     }

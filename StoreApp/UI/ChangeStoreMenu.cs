@@ -2,24 +2,14 @@ namespace UI
 {
     public class ChangeStoreMenu : IMenu
     {
+        private readonly IBL _bl;
+        public ChangeStoreMenu(IBL bl){
+            _bl = bl;
+        }
         public void Start()
         {
             //creates a list of stores, puts a flag on the store id you're at rn
-            List<Storefront> stores = new List<Storefront>();
-            //REMOVE THIS CODE LATER
-            Storefront temp1 = new Storefront();
-            Storefront temp2 = new Storefront();
-            Storefront temp3 = new Storefront();
-            Storefront temp4 = new Storefront();
-            temp1.StoreName = "test 1";
-            temp2.StoreName = "test 2";
-            temp3.StoreName = "test 3";
-            temp4.StoreName = "Apple Superstore";
-            stores.Add(temp1);
-            stores.Add(temp2);
-            stores.Add(temp4);
-            stores.Add(temp3);
-
+            List<Storefront> stores = _bl.GetStores();
             Console.WriteLine("\n\n\n\n\n======================================");
             Console.WriteLine($"[#]: You are at: {c.cStore.StoreName}");
             Console.WriteLine("[#]: Here is a list of our stores");

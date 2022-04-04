@@ -5,50 +5,75 @@ namespace DL
     public class DataStorage : IRepo
     {
         private readonly string _connectionString;
-        public DataStorage(string connectionString){
+        public DataStorage(string connectionString)
+        {
             _connectionString = connectionString;
         }
 
         public int addCustomer(Customer cust)
         {
-            throw new NotImplementedException();
+            //insert into customers (username, password) values cust.username, cust.password
+            //select custid from customers where username = username and password = password
+            return 0;
         }
 
-        public void addOrder(List<Product> cart)
+        public void addOrder(Storefront store, Customer cust, List<Product> cart)
         {
-            throw new NotImplementedException();
+            int orderNum = 0;
+            //select max(ordernum) from order and set to ordernum
+            //insert into order make a loop for every cart item
         }
 
-        public List<Order> GetOrders(bool isEmployee)
+        public List<Order> GetStoreOrders(Storefront store, string sort, bool ascDesc)
         {
-            throw new NotImplementedException();
+            //select * from orders where store = store.storename sort by sort ascdesc
+            return new List<Order>();
+        }
+
+        public List<Order> GetCustOrders(Customer cust, string sort, bool ascDesc)
+        {
+            //select * from orders where cust= cust name sort by sort ascdesc
+            return new List<Order>();
         }
 
         public List<Product> GetStock(Storefront store)
         {
-            throw new NotImplementedException();
+            List<Product> stock = new List<Product>();
+            /*
+            Select Stores.StoreName, Products.ProductName, Products.ProductCost, Stock from StoreStock
+            join Stores on Storestock.Storeid = stores.StoreID
+            join Products on storestock.ProductID = products.productid
+            Where StoreName = 'The Apple Store'
+            */
+            return stock;
         }
 
         public List<Storefront> GetStores()
         {
-            throw new NotImplementedException();
+            //select * from stores;
+            return new List<Storefront>();
         }
 
         public bool loginCheck(Customer cust)
-        {   
+        {
             //only checks if username and password match then returns yes or not
-            throw new NotImplementedException();
+            return true;
         }
 
         public void restock(Storefront store, Product item, int howMany)
         {
-            throw new NotImplementedException();
+            //select stock and store it to a number
+            //update stock from storestock where
+        }
+        public void addToCart(Storefront store, Product item, int howMany)
+        {
+            //same
         }
 
-
-        public void sample(){
+        public void sample()
+        {
             //this is my sample to use for later
-            
+
             //Add connection
             SqlConnection conn = new SqlConnection(_connectionString);
             //Open Connection
@@ -56,7 +81,7 @@ namespace DL
             //query
             string command = "SELECT * FROM thing";
             SqlCommand cmd = new SqlCommand(command, conn);
-            
+
             SqlDataReader reader = cmd.ExecuteReader();
             while (reader.HasRows) // iterates through each row
             //keeps reading while theres rows or results
@@ -74,9 +99,12 @@ namespace DL
             reader.Close(); //kills reader object
             conn.Close(); //closes connection to db to prevent mem leak
         }
-        public void dcSample(){
+        public void dcSample()
+        {
 
 
         }
+
+
     }
 }

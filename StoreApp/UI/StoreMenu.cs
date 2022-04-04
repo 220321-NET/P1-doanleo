@@ -35,7 +35,6 @@ namespace UI
                         c.cCust.isEmployee = true;
                         break;
                     case "x":
-                        c.cCust = new Customer();
                         //Removes the current customer and sets it to the default
                         menuExit = true;
                         break;

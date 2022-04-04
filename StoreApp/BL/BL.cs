@@ -3,22 +3,31 @@ namespace BL
     public class BusinessL : IBL
     {
         private readonly IRepo _repo;
-        public BusinessL(IRepo repo){
+        public BusinessL(IRepo repo)
+        {
             _repo = repo;
         }
-        public void addCustomer(Customer cust)
+        public int addCustomer(Customer cust)
         {
-            _repo.addCustomer(cust);
+            return _repo.addCustomer(cust);
         }
 
-        public void addOrder(List<Product> cart)
+        public void addOrder(Storefront store, Customer cust, List<Product> cart)
         {
-            _repo.addOrder(cart);
+            _repo.addOrder(store, cust, cart);
         }
 
-        public List<Order> GetOrders(bool isEmployee)
+        public void addToCart(Storefront store, Product item, int howMany)
         {
-            return _repo.GetOrders(isEmployee);
+            _repo.addToCart(store, item, howMany);
+        }
+        public List<Order> GetStoreOrders(Storefront store, string sort, bool ascDesc)
+        {
+            return _repo.GetStoreOrders(store, sort, ascDesc);
+        }
+        public List<Order> GetCustOrders(Customer cust, string sort, bool ascDesc)
+        {
+            return _repo.GetCustOrders(cust, sort, ascDesc);
         }
 
         public List<Product> GetStock(Storefront store)
@@ -33,7 +42,7 @@ namespace BL
 
         public bool loginCheck(Customer cust)
         {
-            return loginCheck(cust);
+            return _repo.loginCheck(cust);
         }
 
         public void restock(Storefront store, Product item, int howMany)

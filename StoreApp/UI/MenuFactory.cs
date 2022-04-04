@@ -2,33 +2,37 @@ namespace UI
 {
     public class MenuFactory
     {
-        IMenu cMenu = new MainMenu();
         public IMenu gotoMenu(String menuType)
         {
+            //IMPORTANT: CLEAN UP WHAT ISNT USING IT
+            //For Dependency Injection
+            string connect = File.ReadAllText("./connectionString.txt");
+            IRepo _repo = new DataStorage(connect);
+            IBL _bl = new BusinessL(_repo);
             switch (menuType)
             {
                 case "main":
                     return new MainMenu();
                 case "login":
-                    return new LoginMenu();
+                    return new LoginMenu(_bl);
                 case "signup":
-                    return new SignUpMenu();
+                    return new SignUpMenu(_bl);
                 case "mainstore":
                     return new StoreMenu();
                 case "item":
-                    return new ItemMenu();
+                    return new ItemMenu(_bl);
                 case "stock":
-                    return new ShowStock();
+                    return new ShowStock(_bl);
                 case "add":
-                    return new AddCart();
+                    return new AddCart(_bl);
                 case "rem":
-                    return new RemCart();
+                    return new RemCart(_bl);
                 case "restock":
-                    return new Restock();
+                    return new Restock(_bl);
                 case "order":
-                    return new OrderMenu();
+                    return new OrderMenu(_bl);
                 case "changestore":
-                    return new ChangeStoreMenu();
+                    return new ChangeStoreMenu(_bl);
                 default:
                     return new MainMenu();
             }

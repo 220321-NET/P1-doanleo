@@ -5,6 +5,7 @@
 
 #My inputs
 **/connectionString.txt
+**/SQLQueries
 
 # User-specific files
 *.rsuser

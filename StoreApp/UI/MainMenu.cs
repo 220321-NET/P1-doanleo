@@ -2,6 +2,7 @@ namespace UI
 {
     public class MainMenu : IMenu
     {
+        
         public void Start()
         {
             bool menuExit = false;

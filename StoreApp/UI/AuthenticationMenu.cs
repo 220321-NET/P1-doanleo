@@ -6,7 +6,7 @@ namespace UI
         {
             List<string> userInput = new List<string>();
             bool menuExit = true;
-            //populate userInput in case we exit and return to main menu, it goes back to default
+            //Sets a Default to be modified
             userInput.Add("Guest");
             userInput.Add("password");
             

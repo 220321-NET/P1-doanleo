@@ -2,39 +2,50 @@ namespace UI
 {
     public class LoginMenu : IMenu
     {
+        private readonly IBL _bl;
+        public LoginMenu(IBL bl)
+        {
+            _bl = bl;
+        }
         public void Start()
         {
             Customer user = new Customer();
             Console.WriteLine("\n\n\n\n\n======================================");
             Console.WriteLine("[#]: Please log in to continue");
+
+        TryAgain:
             AuthenticationMenu auth = new AuthenticationMenu();
             List<string> login = auth.Start();
 
             user.username = login[0];
             user.password = login[1];
             //authenticate
-            //if(_bl.loginCheck(user)){
-                //populate with user's information.
-            //}            //populate with user's information.
-            
-            /*
-                Here would be code to validate that they are a user within the list
-                change to return a customer later? that way theres persistence
-                dont need employee class technically cause i have a flag for it
-                an employee is just a customer with more access 
-                    and i can put it in them to check for sure?
-                customer have flag for employee checked in store menu
-                but the search would just match user and password, if match then success
-                if fail then retry
-            */
+            if (_bl.loginCheck(user))
+            {
+                Console.WriteLine("\n\n\n\n\n======================================");
+                Console.WriteLine("[#]: Login Successful!");
+                Console.WriteLine("[#]: Press any button to continue");
+                Console.WriteLine("======================================");
+                Console.ReadKey();
+                c.cCust = user;
+                new MenuFactory().gotoMenu("mainstore").Start();
+            }
+            else
+            {
+                Console.WriteLine("[#]: Could not Authenticate User. Try Again?");
+                Console.WriteLine("[1]: Yes ");
+                Console.WriteLine("[2]: No ");
+                string? retry = Console.ReadLine();
+                if (retry == "1")
+                {
+                    goto TryAgain;
+                }
+                else if (retry != "2")
+                {
+                    Console.WriteLine("[#]: Oops, Invalid Input! Try Again");
+                }
+            }
 
-            Console.WriteLine("\n\n\n\n\n======================================");
-            Console.WriteLine("[#]: Login Successful!");
-            Console.WriteLine("[#]: Press any button to continue");
-            Console.WriteLine("======================================");
-            Console.ReadKey();
-            c.cCust = user;
-            new MenuFactory().gotoMenu("mainstore").Start();
         }
     }
 }

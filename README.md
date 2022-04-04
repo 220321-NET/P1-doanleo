@@ -11,43 +11,32 @@ password to the db is appleRemote1
 ------------
 TO-DO LIST
 ------------
-facotry design 
-https://www.tutorialspoint.com/design_pattern/factory_pattern.htm
-make a static class for current cust cart and location
+
+
+TODO TODAY
+
+add to cart function in irepo just removes an items stock, doesnt care if it goes negative
+
+Select Stores.StoreName, Products.ProductName, Products.ProductCost, Stock from StoreStock
+join Stores on Storestock.Storeid = stores.StoreID
+join Products on storestock.ProductID = products.productid
+Where StoreName = 'The Apple Store'
+Order by productCost;
+
+
+BEGIN SQL STATEMENTS
+
+
+
+remcart might be broken
+make all the close menus's X rather than x or 2
+
+clean up spacing,
+make a ascii logo?
+
 
 lookinto sqlcommandbuilder
-
-user login validation
-clean up the following
-    inside username password i put temp vars 
     set store on launch to default store
-    the temp stuff in rem, and store change
-order menus
-orders contains product id and number of products and customer id
-
-check out does nothing for now, but pushes to the database when done?
-
-            /*
-                View Inventory 
-                    -> Select Location
-                        -> Restock Item (E)
-                            ->Access Granted (M)
-                        -> Add to Cart (C)
-                        -> Check Out (C)
-                        -> Remove From Cart (C)
-                View Order History (checks if customer or employee, 
-                    this method changes depending on which)
-                    -> Sort By (Both Ways)
-                        Location
-                        Date
-                        Cost
-                    -> Display Order Details
-                Logout, flushes currentUser
-            */
-
-restock login verification?
-
-
 mark criteria below as complete
 
 ------------
