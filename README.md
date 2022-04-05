@@ -1,10 +1,30 @@
 # P0-doanleo
 P0 Requirements Due April 6th 2022
+                        .8 
+                      .888
+                    .8888'
+                   .8888'
+                   888'
+                   8'
+      .88888888888. .88888888888.
+   .8888888888888888888888888888888.
+ .8888888888888888888888888888888888.
+.&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&'
+&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&'
+&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&'
+@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@:
+@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@:
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%.
+ `0000000000000000000000000000000000'
+  `0000000000000000000000000000000000'
+   `00000000000000000000000000000000'
+     `#############################'
+       `#########################'
+         `##########''#########'
 
 Store App
 Overview
-The store app is a software that helps customers purchase products fro
-m your business. Designed with functionality that would make virtual shopping much simpler!
+The store app is a software that helps customers purchase products from your business. Designed with functionality that would make virtual shopping much simpler!
 
 password to the db is appleRemote1
 
