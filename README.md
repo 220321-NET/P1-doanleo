@@ -36,7 +36,6 @@ make all the close menus's X rather than x or 2
 
 clean up spacing,
 make a ascii logo?
-set store on launch to default store
 mark criteria below as complete
 
 ------------

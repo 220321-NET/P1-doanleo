@@ -2,15 +2,37 @@ namespace UI
 {
     public class MainMenu : IMenu
     {
-        
+
         public void Start()
         {
             bool menuExit = false;
             do
             {
                 //Menu Front End
-                Console.WriteLine("\n\n\n\n\n======================================");
-                Console.WriteLine("[#]: Welcome to the Apple Store");
+                Console.Clear();
+                Console.WriteLine("======================================");
+                Console.WriteLine("[#]: Welcome to the Big Apple Hub");
+                Console.WriteLine("                        .8 ");
+                Console.WriteLine("                      .888");
+                Console.WriteLine("                    .8888'");
+                Console.WriteLine("                   .8888'");
+                Console.WriteLine("                   888'");
+                Console.WriteLine("                   8'");
+                Console.WriteLine("      .88888888888. .88888888888.");
+                Console.WriteLine("   .8888888888888888888888888888888.");
+                Console.WriteLine(" .8888888888888888888888888888888888.");
+                Console.WriteLine(".&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&'");
+                Console.WriteLine("&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&'");
+                Console.WriteLine("&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&'");
+                Console.WriteLine("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@:");
+                Console.WriteLine("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@:");
+                Console.WriteLine("%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%.");
+                Console.WriteLine(" `0000000000000000000000000000000000'");
+                Console.WriteLine("  `0000000000000000000000000000000000'");
+                Console.WriteLine("   `00000000000000000000000000000000'");
+                Console.WriteLine("     `#############################'");
+                Console.WriteLine("       `#########################'");
+                Console.WriteLine("         `##########''#########'");
                 Console.WriteLine("[#]: Log in or Create an Account to continue: ");
                 Console.WriteLine("======================================");
                 Console.WriteLine("[1]: Log In");
@@ -31,7 +53,7 @@ namespace UI
                         new MenuFactory().gotoMenu("signup").Start();
                         break;
                     case "x":
-                        Console.WriteLine("\n\n\n\n\n======================================");
+                        Console.WriteLine("======================================");
                         Console.WriteLine("[#]: Thank you for your patronage\n[#]: Come back soon!");
                         Console.WriteLine("======================================");
                         menuExit = true;

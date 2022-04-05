@@ -22,7 +22,7 @@ namespace UI
                 if (cUsername == "x")
                 {
                     menuExit = true;
-                    break;
+                    goto Exit;
                 }
                 else if (String.IsNullOrWhiteSpace(cUsername))
                 {
@@ -36,7 +36,7 @@ namespace UI
                     goto Username;
                 }
             Password:
-                Console.WriteLine("\n\n\n\n\n======================================");
+                Console.WriteLine("======================================");
                 Console.WriteLine("[#]: Enter a Password: ");
                 Console.WriteLine("[x]: Cancel and return to main menu");
                 Console.WriteLine("======================================");
@@ -44,7 +44,7 @@ namespace UI
                 if (cPassword == "x")
                 {
                     menuExit = true;
-                    break;
+                    goto Exit;
                 }
                 else if (String.IsNullOrWhiteSpace(cPassword))
                 {
@@ -55,7 +55,7 @@ namespace UI
 
             //Confirm with User
             Confirm:
-                Console.WriteLine("\n\n\n\n\n======================================");
+                Console.WriteLine("======================================");
                 Console.WriteLine($"[#]: Username: {cUsername} \n[#]: Password: {cPassword}");
                 Console.WriteLine("[#]: Is this Correct?");
                 Console.WriteLine("======================================");
@@ -82,6 +82,7 @@ namespace UI
                         goto Confirm;
                 }
             } while (!menuExit);
+            Exit:
             return userInput;
         }
     }

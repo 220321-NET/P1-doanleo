@@ -10,7 +10,7 @@ namespace UI
         {
             //creates a list of stores, puts a flag on the store id you're at rn
             List<Storefront> stores = _bl.GetStores();
-            Console.WriteLine("\n\n\n\n\n======================================");
+            Console.WriteLine("======================================");
             Console.WriteLine($"[#]: You are at: {c.cStore.StoreName}");
             Console.WriteLine("[#]: Here is a list of our stores");
             Console.WriteLine("======================================");

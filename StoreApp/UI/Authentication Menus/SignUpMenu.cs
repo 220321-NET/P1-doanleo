@@ -10,7 +10,6 @@ namespace UI
         public void Start()
         {
             //Create the login
-            Console.WriteLine("\n\n\n\n\n");
             AuthenticationMenu auth = new AuthenticationMenu();
             List<string> login = auth.Start();
             
@@ -21,8 +20,6 @@ namespace UI
             newC.isEmployee = false;
             //push that into add customer, take id
             newC = _bl.addCustomer(newC);
-            //set to current and go to store
-            //welcome message
             c.cCust = newC;
             new MenuFactory().gotoMenu("mainstore").Start();
         }

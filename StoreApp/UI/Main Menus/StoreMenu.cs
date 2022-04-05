@@ -8,8 +8,8 @@ namespace UI
             //Menu Front End
             do
             {
-                Console.WriteLine("\n\n\n\n\n======================================");
-                Console.WriteLine($"[#]: Welcome to the Apple Store, User: {c.cCust.username} {c.cCust.isEmployee}");
+                Console.WriteLine("======================================");
+                Console.WriteLine($"[#]: Welcome to {c.cStore.StoreName}, User: {c.cCust.username}");
                 Console.WriteLine("[#]: Select an Option: ");
                 Console.WriteLine("======================================");
                 Console.WriteLine("[1]: View Items in Stock");

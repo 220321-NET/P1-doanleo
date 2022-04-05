@@ -14,7 +14,7 @@ namespace UI
             //Menu Front End
             do
             {
-                Console.WriteLine("\n\n\n\n\n======================================");
+                Console.WriteLine("======================================");
                 Console.WriteLine($"[#]: Store: {c.cStore.StoreName}");
                 Console.WriteLine($"[#]: User: {c.cCust.username}| Cart: {c.cCart.Count}");
                 new MenuFactory().gotoMenu("stock").Start();
@@ -56,14 +56,14 @@ namespace UI
                             Console.WriteLine($"[#]: Are you sure you want to leave?");
                             Console.WriteLine($"[#]: Leaving will reset your cart");
                             Console.WriteLine("[1]: Yes ");
-                            Console.WriteLine("[2]: No ");
+                            Console.WriteLine("[x]: No ");
                             string? retry = Console.ReadLine();
                             if (retry == "1")
                             {
                                 clearCart();
                                 menuExit = true;
                             }
-                            else if (retry != "2")
+                            else if (retry != "x")
                             {
                                 Console.WriteLine("[#]: Oops, Invalid Input! Try Again");
                                 goto TryAgain;
@@ -109,7 +109,7 @@ namespace UI
             Console.WriteLine("[#]: Would you like to check out?");
             Console.WriteLine($"[#]: Total: ${String.Format("{0:0.00}", total)}");
             Console.WriteLine("[1]: Yes ");
-            Console.WriteLine("[2]: No ");
+            Console.WriteLine("[x]: No ");
             string? retry = Console.ReadLine();
             if (retry == "1")
             {
@@ -117,7 +117,7 @@ namespace UI
                 //Clear Cart
                 c.cCart = new List<Product>();
             }
-            else if (retry != "2")
+            else if (retry != "x")
             {
                 Console.WriteLine("[#]: Oops, Invalid Input! Try Again");
                 goto TryAgain;

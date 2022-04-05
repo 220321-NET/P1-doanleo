@@ -10,7 +10,7 @@ namespace UI
         public void Start()
         {
             Customer user = new Customer();
-            Console.WriteLine("\n\n\n\n\n======================================");
+            Console.WriteLine("======================================");
             Console.WriteLine("[#]: Please log in to continue");
 
         TryAgain:
@@ -22,7 +22,7 @@ namespace UI
             //authenticate
             if (_bl.loginCheck(user))
             {
-                Console.WriteLine("\n\n\n\n\n======================================");
+                Console.WriteLine("======================================");
                 Console.WriteLine("[#]: Login Successful!");
                 Console.WriteLine("[#]: Press any button to continue");
                 Console.WriteLine("======================================");
@@ -35,13 +35,13 @@ namespace UI
             {
                 Console.WriteLine("[#]: Could not Authenticate User. Try Again?");
                 Console.WriteLine("[1]: Yes ");
-                Console.WriteLine("[2]: No ");
+                Console.WriteLine("[x]: No ");
                 string? retry = Console.ReadLine();
                 if (retry == "1")
                 {
                     goto TryAgain;
                 }
-                else if (retry != "2")
+                else if (retry != "x")
                 {
                     Console.WriteLine("[#]: Oops, Invalid Input! Try Again");
                 }

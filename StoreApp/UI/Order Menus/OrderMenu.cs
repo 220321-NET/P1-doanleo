@@ -29,7 +29,7 @@ namespace UI
                 //flag if ascending or desc, true = asc 
 
                 //Menu Front End
-                Console.WriteLine("\n\n\n\n\n======================================");
+                Console.WriteLine("======================================");
                 Console.WriteLine($"[#]: How do you want to Sort By?");
                 if (accessGranted) { Console.WriteLine($"[#]: Store: {c.cStore.StoreName} | Orders: {count}"); }
                 if (!accessGranted) { Console.WriteLine($"[#]: User: {c.cCust.username} | Orders: {count}"); }
@@ -51,13 +51,13 @@ namespace UI
                 switch (input)
                 {
                     case "1":
-                        viewOrder(accessGranted, "Orders.OrderNum", onnum);
+                        viewOrder(accessGranted, "OrderNum", onnum);
                         onnum = !onnum;
                         otot = true;
                         cs = true;
                         break;
                     case "2":
-                        viewOrder(accessGranted, "Orders.OrderTotal", otot);
+                        viewOrder(accessGranted, "OrderTotal", otot);
                         onnum = true;
                         otot = !otot;
                         cs = true;
@@ -65,14 +65,14 @@ namespace UI
                     case "3":
                         if (accessGranted)
                         {
-                            viewOrder(accessGranted, "Orders.CustomerID", cs);
+                            viewOrder(accessGranted, "CustomerID", cs);
                             onnum = true;
                             otot = true;
                             cs = !cs;
                         }
                         if (!accessGranted)
                         {
-                            viewOrder(accessGranted, "Orders.StoreID", cs);
+                            viewOrder(accessGranted, "StoreID", cs);
                             onnum = true;
                             otot = true;
                             cs = !cs;
@@ -108,6 +108,7 @@ namespace UI
         {
             string sorted = "/\\";
             if (!ascDesc) { sorted = "\\/"; }
+            sort = "Orders." + sort;
             Console.WriteLine($"[#]: Sorting by {sort} {sorted}");
             List<Order> oList = new List<Order>();
             if (isE)

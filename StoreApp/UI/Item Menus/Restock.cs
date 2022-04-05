@@ -52,13 +52,13 @@ namespace UI
         TryAgain:
             Console.WriteLine("[#]: Would you like to restock another?: ");
             Console.WriteLine("[1] Yes ");
-            Console.WriteLine("[2] No ");
+            Console.WriteLine("[x] No ");
             string? retry = Console.ReadLine();
             if (retry == "1")
             {
                 goto AnotherOne;
             }
-            else if (retry != "2")
+            else if (retry != "x")
             {
                 Console.WriteLine("[#]: Oops, Invalid Input! Try Again");
                 goto TryAgain;
@@ -81,13 +81,13 @@ namespace UI
             TryAgain:
                 Console.WriteLine("[#]: Oops, Invalid Input! Try Again?");
                 Console.WriteLine("[1]: Yes ");
-                Console.WriteLine("[2]: No ");
+                Console.WriteLine("[x]: No ");
                 string? retry = Console.ReadLine();
                 if (retry == "1")
                 {
                     goto AnotherOne;
                 }
-                else if (retry != "2")
+                else if (retry != "x")
                 {
                     Console.WriteLine("[#]: Oops, Invalid Input! Try Again");
                     goto TryAgain;
