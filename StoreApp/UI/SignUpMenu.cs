@@ -20,7 +20,7 @@ namespace UI
             newC.password = login[1];
             newC.isEmployee = false;
             //push that into add customer, take id
-            newC.CustID = _bl.addCustomer(newC);
+            newC = _bl.addCustomer(newC);
             //set to current and go to store
             //welcome message
             c.cCust = newC;

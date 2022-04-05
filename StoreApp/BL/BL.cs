@@ -7,7 +7,7 @@ namespace BL
         {
             _repo = repo;
         }
-        public int addCustomer(Customer cust)
+        public Customer addCustomer(Customer cust)
         {
             return _repo.addCustomer(cust);
         }
@@ -50,7 +50,7 @@ namespace BL
             _repo.restock(store, item, howMany);
         }
 
-        public int getID(Customer cust)
+        public Customer getID(Customer cust)
         {
             return _repo.getID(cust);
         }

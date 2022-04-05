@@ -14,7 +14,9 @@ namespace UI
             // if employee go to viewStoreOrders(string sort)
             // if customer go to viewCustOrders(string sort)
             // display with a default search then give sort options, 
-            bool ascDesc = true;
+            bool onnum = true;
+            bool otot = true;
+            bool cs = true;
             bool menuExit = false;
             do
             {
@@ -28,7 +30,7 @@ namespace UI
 
                 //Menu Front End
                 Console.WriteLine("\n\n\n\n\n======================================");
-                Console.WriteLine($"[#]: How do you want to Sort By? {ascDesc}");
+                Console.WriteLine($"[#]: How do you want to Sort By?");
                 if (accessGranted) { Console.WriteLine($"[#]: Store: {c.cStore.StoreName} | Orders: {count}"); }
                 if (!accessGranted) { Console.WriteLine($"[#]: User: {c.cCust.username} | Orders: {count}"); }
                 Console.WriteLine("======================================");
@@ -49,23 +51,31 @@ namespace UI
                 switch (input)
                 {
                     case "1":
-                        viewOrder(accessGranted, "Orders.OrderNum", ascDesc);
-                        ascDesc = !ascDesc;
+                        viewOrder(accessGranted, "Orders.OrderNum", onnum);
+                        onnum = !onnum;
+                        otot = true;
+                        cs = true;
                         break;
                     case "2":
-                        viewOrder(accessGranted, "Orders.OrderTotal", ascDesc);
-                        ascDesc = !ascDesc;
+                        viewOrder(accessGranted, "Orders.OrderTotal", otot);
+                        onnum = true;
+                        otot = !otot;
+                        cs = true;
                         break;
                     case "3":
                         if (accessGranted)
                         {
-                            viewOrder(accessGranted, "Orders.CustomerID", ascDesc);
-                            ascDesc = !ascDesc;
+                            viewOrder(accessGranted, "Orders.CustomerID", cs);
+                            onnum = true;
+                            otot = true;
+                            cs = !cs;
                         }
                         if (!accessGranted)
                         {
-                            viewOrder(accessGranted, "Orders.StoreID", ascDesc);
-                            ascDesc = !ascDesc;
+                            viewOrder(accessGranted, "Orders.StoreID", cs);
+                            onnum = true;
+                            otot = true;
+                            cs = !cs;
                         }
                         break;
                     case "4":

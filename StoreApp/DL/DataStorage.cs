@@ -11,7 +11,7 @@ namespace DL
             _connectionString = connectionString;
         }
 
-        public int addCustomer(Customer cust)
+        public Customer addCustomer(Customer cust)
         {
             using SqlConnection conn = new SqlConnection(_connectionString);
             conn.Open();
@@ -219,7 +219,7 @@ namespace DL
             return found;
         }
 
-        public int getID(Customer cust)
+        public Customer getID(Customer cust)
         {
             int id = -1;
 
@@ -228,15 +228,23 @@ namespace DL
             using SqlCommand cmd = new SqlCommand("SELECT * FROM Customers WHERE username = @user AND password = @pass", conn);
             cmd.Parameters.AddWithValue("@user", cust.username);
             cmd.Parameters.AddWithValue("@pass", cust.password);
-
+            Customer t = new Customer();
             SqlDataReader reader = cmd.ExecuteReader();
             while (reader.Read())
             {
                 id = reader.GetInt32(0);
+                string u = reader.GetString(1);
+                string p = reader.GetString(2);
+                bool isE = reader.GetBoolean(3);
+
+                t.CustID = id;
+                t.username= u;
+                t.password = p;
+                t.isEmployee = isE;
             }
             reader.Close();
             conn.Close();
-            return id;
+            return t;
         }
 
         public void restock(Storefront store, Product item, int howMany)

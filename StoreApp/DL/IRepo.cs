@@ -48,7 +48,7 @@ namespace DL
         /// Add a customer to the database, and returns their ID
         /// </summary>
         /// <param name="cust">Customer information</param>
-        public int addCustomer(Customer cust);
+        public Customer addCustomer(Customer cust);
 
         /// <summary>
         /// Incriments to the stock of an item within a store
@@ -79,7 +79,7 @@ namespace DL
         /// </summary>
         /// <param name="cust">Customer Info</param>
         /// <returns>Customer's ID</returns>
-        public int getID(Customer cust);
+        public Customer getID(Customer cust);
 
     }
 }

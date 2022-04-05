@@ -9,13 +9,13 @@ namespace BL
         List<Order> GetCustOrders(Customer cust, string sort, bool ascDesc);
         //Add to DB
         public void addOrder(Storefront store, Customer cust, List<Product> cart);
-        public int addCustomer(Customer cust);
+        public Customer addCustomer(Customer cust);
 
         //Update DB
         public void restock(Storefront store, Product item, int howMany);
         public void addToCart(Storefront store, Product item, int howMany);
         //Authenticate from DB
         public bool loginCheck(Customer cust);
-        public int getID(Customer cust);
+        public Customer getID(Customer cust);
     }
 }

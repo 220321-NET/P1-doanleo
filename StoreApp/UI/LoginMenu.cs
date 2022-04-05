@@ -26,7 +26,7 @@ namespace UI
                 Console.WriteLine("[#]: Login Successful!");
                 Console.WriteLine("[#]: Press any button to continue");
                 Console.WriteLine("======================================");
-                user.CustID = _bl.getID(user);
+                user = _bl.getID(user);
                 Console.ReadKey();
                 c.cCust = user;
                 new MenuFactory().gotoMenu("mainstore").Start();

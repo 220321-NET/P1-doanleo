@@ -13,6 +13,7 @@ TO-DO LIST
 ------------
 
 make all the close menus's X rather than x or 2
+
 clean up spacing,
 make a ascii logo?
 set store on launch to default store
@@ -21,16 +22,16 @@ mark criteria below as complete
 ------------
 Functionality
 ------------
-add a new customer ("sign up")
-search customers by name("log in")
-view storefront inventory
-place orders to a store for customers
-The customer should be able to purchase multiple products
-view order history of customer
-view order history of location
-display details of an order
-Order histories should have the option to be sorted by date (latest to oldest and vice versa) or cost (least expensive to most expensive)
-The manager should be able to replenish inventory
+x add a new customer ("sign up")
+x search customers by name("log in")
+x view storefront inventory
+x place orders to a store for customers
+x The customer should be able to purchase multiple products
+x view order history of customer
+x view order history of location
+x display details of an order
+x Order histories should have the option to be sorted by date (latest to oldest and vice versa) or cost (least expensive to most expensive)
+x The manager should be able to replenish inventory
 
 ------------
 Models
@@ -45,14 +46,14 @@ Note: Add as much models as you would need for your design
 Additional requirements
 ------------
 Exception Handling
-Input validation
+x Input validation
 At least 20 unit tests
 Logging (to a file, no logging to the console)
-Data should be persisted, (no data should be hard coded)
-You should use a DB to store data
-DB structure should be 3NF
-Should have an ER Diagram
-Code should have xml documentation
+x Data should be persisted, (no data should be hard coded)
+x You should use a DB to store data
+x DB structure should be 3NF
+x Should have an ER Diagram
+x Code should have xml documentation
 
 ------------
 Tech Stack

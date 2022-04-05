@@ -1,6 +1,3 @@
-
-
-
 namespace UI
 {
     //Main 
