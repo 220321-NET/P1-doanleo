@@ -39,9 +39,12 @@ password to the db is appleRemote1, dont tell anyone that
 ------------------
 Additional Requirements that I'm missing
 ------------------
-20 Unit Tests
-Logging
-True Exception Handling
-True Input Validation
 
-Usage of Xunit and Serilog/Nlog
+
+-Logging
+
+serilog/Nlog
+
+True Exception Handling, kinda hardcoded in
+
+True Input Validation, can make stock negative and restock negatives
