@@ -4,7 +4,6 @@ namespace UI
     {
         public IMenu gotoMenu(String menuType)
         {
-            //IMPORTANT: CLEAN UP WHAT ISNT USING IT
             //For Dependency Injection
             string connect = File.ReadAllText("./connectionString.txt");
             IRepo _repo = new DataStorage(connect);

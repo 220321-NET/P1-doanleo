@@ -108,8 +108,8 @@ namespace UI
         {
             string sorted = "/\\";
             if (!ascDesc) { sorted = "\\/"; }
-            sort = "Orders." + sort;
             Console.WriteLine($"[#]: Sorting by {sort} {sorted}");
+            sort = "Orders." + sort;
             List<Order> oList = new List<Order>();
             if (isE)
             {

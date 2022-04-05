@@ -25,21 +25,25 @@ namespace UI
                 Console.WriteLine("======================================");
                 Console.WriteLine("[#]: Login Successful!");
                 Console.WriteLine("[#]: Press any button to continue");
-                Console.WriteLine("======================================");
                 user = _bl.getID(user);
                 Console.ReadKey();
                 c.cCust = user;
                 new MenuFactory().gotoMenu("mainstore").Start();
             }
-            else
+            else if (user.username != "Guest")
             {
                 Console.WriteLine("[#]: Could not Authenticate User. Try Again?");
                 Console.WriteLine("[1]: Yes ");
+                Console.WriteLine("[2]: Sign Up");
                 Console.WriteLine("[x]: No ");
                 string? retry = Console.ReadLine();
                 if (retry == "1")
                 {
                     goto TryAgain;
+                }
+                else if (retry == "2")
+                {
+                    new MenuFactory().gotoMenu("signup").Start();
                 }
                 else if (retry != "x")
                 {

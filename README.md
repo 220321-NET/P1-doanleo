@@ -1,84 +1,37 @@
 # P0-doanleo
-P0 Requirements Due April 6th 2022
-                        .8 
-                      .888
-                    .8888'
-                   .8888'
-                   888'
-                   8'
-      .88888888888. .88888888888.
-   .8888888888888888888888888888888.
- .8888888888888888888888888888888888.
-.&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&'
-&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&'
-&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&'
-@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@:
-@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@:
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%.
- `0000000000000000000000000000000000'
-  `0000000000000000000000000000000000'
-   `00000000000000000000000000000000'
-     `#############################'
-       `#########################'
-         `##########''#########'
 
-Store App
-Overview
-The store app is a software that helps customers purchase products from your business. Designed with functionality that would make virtual shopping much simpler!
+------------------
+Big Apple Hub
+------------------
+A small network of stores that work closely with local Apple Orchards
 
-password to the db is appleRemote1
+------------------
+Functions
+------------------
+The User must log in to access the store
+-They can sign in with an existing account
+--If the authentication fails, they are given the option to create a new account
+-They can create a new account
 
-------------
-TO-DO LIST
-------------
+When within the store, they are sent to the default "The Apple Store" and are given two options
+-View Items in this store's stock
+-View Customer's Order History across all stores
+-Change Store they're at, this function is used in various menus
 
-make all the close menus's X rather than x or 2
+Upon viewing a store's inventory, they can add one of the items to their cart, remove items from the cart, check out, or change to another store
+If the user is an employee, they are allowed to restock the store they're at
 
-clean up spacing,
-make a ascii logo?
-mark criteria below as complete
+Upon viewing their order history, it will give the option to sort their orders, upon selecting the same sort again, it will change between ascending and descending order
+If the user is an employee, they are redirected to looking at the store's orders and can change the store they're looking at. There is also an option to swap between viewing their own orders or the stores.
 
-------------
-Functionality
-------------
-x add a new customer ("sign up")
-x search customers by name("log in")
-x view storefront inventory
-x place orders to a store for customers
-x The customer should be able to purchase multiple products
-x view order history of customer
-x view order history of location
-x display details of an order
-x Order histories should have the option to be sorted by date (latest to oldest and vice versa) or cost (least expensive to most expensive)
-x The manager should be able to replenish inventory
+password to the db is appleRemote1, dont tell anyone that
 
-------------
-Models
-------------
-Customer
-StoreFront
-Orders
-Product
-Note: Add as much models as you would need for your design
+------------------
+Additional Requirements that I'm missing
+------------------
+20 Unit Tests
+Logging
+True Exception Handling
+True Input Validation
 
-------------
-Additional requirements
-------------
-Exception Handling
-x Input validation
-At least 20 unit tests
-Logging (to a file, no logging to the console)
-x Data should be persisted, (no data should be hard coded)
-x You should use a DB to store data
-x DB structure should be 3NF
-x Should have an ER Diagram
-x Code should have xml documentation
-
-------------
-Tech Stack
-------------
-C#
-Xunit
-SQLServer DB
-ADO.NET
-Serilog or Nlog (or any other logging frameworks)
+Usage of Xunit and Serilog/Nlog

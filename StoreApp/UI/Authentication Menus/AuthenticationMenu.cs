@@ -9,7 +9,7 @@ namespace UI
             //Sets a Default to be modified
             userInput.Add("Guest");
             userInput.Add("password");
-            
+
             do
             {
             //Take User Input 
@@ -21,6 +21,8 @@ namespace UI
                 string? cUsername = Console.ReadLine();
                 if (cUsername == "x")
                 {
+                    //if canceled reset to default
+                    userInput[0] = "Guest";
                     menuExit = true;
                     goto Exit;
                 }
@@ -43,6 +45,8 @@ namespace UI
                 string? cPassword = Console.ReadLine();
                 if (cPassword == "x")
                 {
+                    //if canceled reset to default
+                    userInput[0] = "Guest";
                     menuExit = true;
                     goto Exit;
                 }
@@ -82,7 +86,7 @@ namespace UI
                         goto Confirm;
                 }
             } while (!menuExit);
-            Exit:
+        Exit:
             return userInput;
         }
     }

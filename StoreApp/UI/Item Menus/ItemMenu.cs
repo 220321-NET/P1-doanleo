@@ -43,27 +43,56 @@ namespace UI
                         new MenuFactory().gotoMenu("rem").Start();
                         break;
                     case "3":
+                        if (c.cCart.Count < 1)
+                        {
+                            Console.WriteLine("[#]: Your cart is Empty");
+                            break;
+                        }
                         checkout();
                         break;
                     case "4":
-                        new MenuFactory().gotoMenu("changestore").Start();
+                        if (c.cCart.Count > 0)
+                        {
+                        TryAgain:
+                            Console.WriteLine($"[#]: There are {c.cCart.Count} item(s) in your cart");
+                            Console.WriteLine("[#]: Are you sure you want to change stores?");
+                            Console.WriteLine("[#]: Leaving will reset your cart");
+                            Console.WriteLine("[1]: Go Back");
+                            Console.WriteLine("[x]: Leave");
+                            string? retry = Console.ReadLine();
+                            if (retry == "x")
+                            {
+                                clearCart();
+                                new MenuFactory().gotoMenu("changestore").Start();
+                            }
+                            else if (retry != "1")
+                            {
+                                Console.WriteLine("[#]: Oops, Invalid Input! Try Again");
+                                goto TryAgain;
+                            }
+
+                        }
+                        else
+                        {
+                            new MenuFactory().gotoMenu("changestore").Start();
+                        }
                         break;
                     case "x":
                         if (c.cCart.Count > 0)
                         {
                         TryAgain:
                             Console.WriteLine($"[#]: There are {c.cCart.Count} item(s) in your cart");
-                            Console.WriteLine($"[#]: Are you sure you want to leave?");
-                            Console.WriteLine($"[#]: Leaving will reset your cart");
-                            Console.WriteLine("[1]: Yes ");
-                            Console.WriteLine("[x]: No ");
+                            Console.WriteLine("[#]: Are you sure you want to leave?");
+                            Console.WriteLine("[#]: Leaving will reset your cart");
+                            Console.WriteLine("[1]: Go Back");
+                            Console.WriteLine("[x]: Leave");
                             string? retry = Console.ReadLine();
-                            if (retry == "1")
+                            if (retry == "x")
                             {
                                 clearCart();
                                 menuExit = true;
                             }
-                            else if (retry != "x")
+                            else if (retry != "1")
                             {
                                 Console.WriteLine("[#]: Oops, Invalid Input! Try Again");
                                 goto TryAgain;
@@ -101,8 +130,8 @@ namespace UI
             }
             foreach (var prod in d)
             {
-                
-                Console.WriteLine($"[#]: {prod.Key.ProdName} | {prod.Value} x ${prod.Key.ProdCost} = ${String.Format("{0:0.00}",prod.Value * prod.Key.ProdCost)}");
+
+                Console.WriteLine($"[#]: {prod.Key.ProdName} | {prod.Value} x ${prod.Key.ProdCost} = ${String.Format("{0:0.00}", prod.Value * prod.Key.ProdCost)}");
             }
             Console.WriteLine("======================================");
         TryAgain:
