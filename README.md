@@ -5,6 +5,8 @@ Big Apple Hub
 ------------------
 A small network of stores that work closely with local Apple Orchards
 
+There is a set list of Apples the network is allowed to sell and fixed price for said types of apples shared across all stores
+
 ------------------
 Functions
 ------------------
@@ -41,9 +43,7 @@ Additional Requirements that I'm missing
 ------------------
 
 
--Logging
-
-serilog/Nlog
+-Logging with serilog/Nlog
 
 True Exception Handling, kinda hardcoded in
 
