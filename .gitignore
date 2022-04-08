@@ -6,8 +6,7 @@
 #My inputs
 **/connectionString.txt
 **/SQLQueries
-**/appsettings.json
-**/appsettings.Development.json
+
 
 # User-specific files
 *.rsuser
@@ -458,3 +457,5 @@ $RECYCLE.BIN/
 !.vscode/tasks.json
 !.vscode/launch.json
 !.vscode/extensions.json
+StoreApp/WebAPI/appsettings.json
+StoreApp/WebAPI/appsettings.Development.json
