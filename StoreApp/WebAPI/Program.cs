@@ -21,6 +21,8 @@ builder.Services.AddControllers().AddJsonOptions(options => options.JsonSerializ
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
+//creates an IMemory Cache that lets us cache our results
+builder.Services.AddMemoryCache();
 
 builder.Services.AddScoped<IRepo>(ctx => new DataStorage(builder.Configuration.GetConnectionString("SLDB")));
 builder.Services.AddScoped<IBL, BusinessL>();
