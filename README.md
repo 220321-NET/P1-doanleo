@@ -1,4 +1,13 @@
-# P0-doanleo
+# P1-doanleo
+
+---
+todo
+---
+
+refactor getID to become get customer or something?
+ask bout login check
+ask why git ignore isnt letting me git ignore
+
 
 ------------------
 Big Apple Hub
