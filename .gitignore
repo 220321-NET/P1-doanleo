@@ -457,5 +457,5 @@ $RECYCLE.BIN/
 !.vscode/tasks.json
 !.vscode/launch.json
 !.vscode/extensions.json
-StoreApp/WebAPI/appsettings.json
-StoreApp/WebAPI/appsettings.Development.json
+appsettings.json
+appsettings.Development.json
