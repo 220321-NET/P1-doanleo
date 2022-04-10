@@ -4,9 +4,18 @@
 todo
 ---
 
-refactor getID to become get customer or something?
-ask bout login check
-ask why git ignore isnt letting me git ignore
+NOTE THAT THE PROGRAM WILL NOT RUN IN ITS CURRENT STATE
+
+
+refactor data storage to take in strings and ints? ask her if i should
+
+move front end out of back end folder
+remove reference in ui to back end dl/bl
+remove ui from the back end sln
+convert bl stuff to async
+async stuff that needs to interact between both layers
+
+ui stuff, set up HTTPservice with all the old bl/dl stuff assign it to the menu factory repo
 
 
 ------------------

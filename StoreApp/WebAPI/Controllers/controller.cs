@@ -18,41 +18,47 @@ namespace WebAPI.Controllers
         }
         //Get Commands
         [HttpGet]
-        public List<Storefront> GetStores()
+        public async Task<List<Storefront>> GetStoresAsync()
         {
-            return _bl.GetStores();
+            return await _bl.GetStoresAsync();
         }
         [HttpGet]
-        public List<Product> GetStock(Storefront store)
+        public async Task<List<Product>> GetStockAsync(Storefront store)
         {
-            return _bl.GetStock(store);
+            return await _bl.GetStockAsync(store);
         }
         [HttpGet("sort")]
-        public List<Order> GetStoreOrders(Storefront store, string sort, bool ascDesc)
+        public async Task<List<Order>> GetStoreOrdersAsync(Storefront store, string sort, bool ascDesc)
         {
-            return _bl.GetStoreOrders(store, sort, ascDesc);
+            return await _bl.GetStoreOrdersAsync(store, sort, ascDesc);
         }
         [HttpGet("sort")]
-        public List<Order> GetCustOrders(Customer cust, string sort, bool ascDesc)
+        public async Task<List<Order>> GetCustOrdersAsync(Customer cust, string sort, bool ascDesc)
         {
-            return _bl.GetCustOrders(cust, sort, ascDesc);
+            return await _bl.GetCustOrdersAsync(cust, sort, ascDesc);
         }
-        [HttpPost]
-        public void addOrder(Storefront store, Customer cust, List<Product> cart)
-        {
-            _bl.addOrder(store, cust, cart);
-        }
+        
         [HttpPost]
         public Customer addCustomer(Customer cust)
         {
             return _bl.addCustomer(cust);
         }
         [HttpPost]
+        public bool loginCheck(Customer cust)
+        {
+            return _bl.loginCheck(cust);
+        }
+        [HttpPost]
+        public void addOrder(Storefront store, Customer cust, List<Product> cart)
+        {
+            _bl.addOrder(store, cust, cart);
+        }
+        [HttpPut]
         public void restock(Storefront store, Product item, int howMany)
         {
             _bl.restock(store, item, howMany);
         }
-        [HttpPost]
+        [HttpPut]
         public void addToCart(Storefront store, Product item, int howMany)
         {
             _bl.addToCart(store, item, howMany);

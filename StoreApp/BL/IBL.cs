@@ -3,10 +3,10 @@ namespace BL
     public interface IBL
     {
         //Get From DB
-        List<Storefront> GetStores();
-        List<Product> GetStock(Storefront store);
-        List<Order> GetStoreOrders(Storefront store, string sort, bool ascDesc);
-        List<Order> GetCustOrders(Customer cust, string sort, bool ascDesc);
+        Task<List<Storefront>> GetStoresAsync();
+        Task<List<Product>> GetStockAsync(Storefront store);
+        Task<List<Order>> GetStoreOrdersAsync(Storefront store, string sort, bool ascDesc);
+        Task<List<Order>> GetCustOrdersAsync(Customer cust, string sort, bool ascDesc);
         //Add to DB
         public void addOrder(Storefront store, Customer cust, List<Product> cart);
         public Customer addCustomer(Customer cust);

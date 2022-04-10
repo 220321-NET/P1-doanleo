@@ -21,23 +21,23 @@ namespace BL
         {
             _repo.addToCart(store, item, howMany);
         }
-        public List<Order> GetStoreOrders(Storefront store, string sort, bool ascDesc)
+        public async Task<List<Order>> GetStoreOrdersAsync(Storefront store, string sort, bool ascDesc)
         {
-            return _repo.GetStoreOrders(store, sort, ascDesc);
+            return await _repo.GetStoreOrdersAsync(store, sort, ascDesc);
         }
-        public List<Order> GetCustOrders(Customer cust, string sort, bool ascDesc)
+        public async Task<List<Order>> GetCustOrdersAsync(Customer cust, string sort, bool ascDesc)
         {
-            return _repo.GetCustOrders(cust, sort, ascDesc);
-        }
-
-        public List<Product> GetStock(Storefront store)
-        {
-            return _repo.GetStock(store);
+            return await _repo.GetCustOrdersAsync(cust, sort, ascDesc);
         }
 
-        public List<Storefront> GetStores()
+        public async Task<List<Product>> GetStockAsync(Storefront store)
         {
-            return _repo.GetStores();
+            return await _repo.GetStockAsync(store);
+        }
+
+        public async Task<List<Storefront>> GetStoresAsync()
+        {
+            return await _repo.GetStoresAsync();
         }
 
         public bool loginCheck(Customer cust)
