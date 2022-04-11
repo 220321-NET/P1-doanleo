@@ -4,20 +4,31 @@
 todo
 ---
 
-NOTE THAT THE PROGRAM WILL NOT RUN IN ITS CURRENT STATE
+work on making a cart model
 
-
-refactor data storage to take in strings and ints? ask her if i should
+ask her about how httpservice works, "GetStreamAsync("Issues")" where does issues go to?
 
 move front end out of back end folder
-remove reference in ui to back end dl/bl
+convert references to the UI to references in HTTP service, also make http service
 remove ui from the back end sln
 convert bl stuff to async
 async stuff that needs to interact between both layers
 
-ui stuff, set up HTTPservice with all the old bl/dl stuff assign it to the menu factory repo
 
 
+>
+ui stuff, set up HTTPservice with all the old bl/dl stuff assign it to the menu factory 
+in menufactory
+HttpService http = new HttpService();
+
+await? new MenuFactory().gotoMenu("main").Start();
+
+in each menu to inject
+private readonly HttpService _http
+(HttpService http)
+
+_http = http
+>
 ------------------
 Big Apple Hub
 ------------------

@@ -7,52 +7,49 @@ namespace BL
         {
             _repo = repo;
         }
-        public Customer addCustomer(Customer cust)
-        {
-            return _repo.addCustomer(cust);
-        }
-
-        public void addOrder(Storefront store, Customer cust, List<Product> cart)
-        {
-            _repo.addOrder(store, cust, cart);
-        }
-
-        public void addToCart(Storefront store, Product item, int howMany)
-        {
-            _repo.addToCart(store, item, howMany);
-        }
-        public async Task<List<Order>> GetStoreOrdersAsync(Storefront store, string sort, bool ascDesc)
-        {
-            return await _repo.GetStoreOrdersAsync(store, sort, ascDesc);
-        }
-        public async Task<List<Order>> GetCustOrdersAsync(Customer cust, string sort, bool ascDesc)
-        {
-            return await _repo.GetCustOrdersAsync(cust, sort, ascDesc);
-        }
-
-        public async Task<List<Product>> GetStockAsync(Storefront store)
-        {
-            return await _repo.GetStockAsync(store);
-        }
-
         public async Task<List<Storefront>> GetStoresAsync()
         {
             return await _repo.GetStoresAsync();
         }
-
-        public bool loginCheck(Customer cust)
+        public async Task<List<Product>> GetStockAsync(int sID)
         {
-            return _repo.loginCheck(cust);
+            return await _repo.GetStockAsync(sID);
+        }
+        public async Task<List<Order>> GetStoreOrdersAsync(int sID, string sort, bool ascDesc)
+        {
+            return await _repo.GetStoreOrdersAsync(sID, sort, ascDesc);
+        }
+        public async Task<List<Order>> GetCustOrdersAsync(int cID, string sort, bool ascDesc)
+        {
+            return await _repo.GetCustOrdersAsync(cID, sort, ascDesc);
+        }
+        public Customer addCustomer(string user, string pass)
+        {
+            return _repo.addCustomer(user, pass);
         }
 
-        public void restock(Storefront store, Product item, int howMany)
+        public Customer getCustomer(Customer cust)
         {
-            _repo.restock(store, item, howMany);
+            return _repo.getCustomer(cust);
         }
-
-        public Customer getID(Customer cust)
+        public bool authenticate(string user, string pass)
         {
-            return _repo.getID(cust);
+            return _repo.authenticate(user, pass);
+        }
+        public bool existingUser(string user){
+            return _repo.existingUser(user);
+        }
+        public void addOrder(int sID, int cID, List<Product> cart)
+        {
+            _repo.addOrder(sID, cID, cart);
+        }
+        public void restock(int sID, int pID, int howMany)
+        {
+            _repo.restock(sID, pID, howMany);
+        }
+        public void addToCart(int sID, int pID, int howMany)
+        {
+            _repo.addToCart(sID, pID, howMany);
         }
     }
 }

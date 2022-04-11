@@ -20,12 +20,12 @@ namespace UI
             user.username = login[0];
             user.password = login[1];
             //authenticate
-            if (_bl.loginCheck(user))
+            if (_bl.authenticate(user.username, user.password))
             {
                 Console.WriteLine("======================================");
                 Console.WriteLine("[#]: Login Successful!");
                 Console.WriteLine("[#]: Press any button to continue");
-                user = _bl.getID(user);
+                user = _bl.getCustomer(user);
                 Console.ReadKey();
                 c.cCust = user;
                 new MenuFactory().gotoMenu("mainstore").Start();

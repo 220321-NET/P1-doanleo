@@ -4,18 +4,16 @@ namespace BL
     {
         //Get From DB
         Task<List<Storefront>> GetStoresAsync();
-        Task<List<Product>> GetStockAsync(Storefront store);
-        Task<List<Order>> GetStoreOrdersAsync(Storefront store, string sort, bool ascDesc);
-        Task<List<Order>> GetCustOrdersAsync(Customer cust, string sort, bool ascDesc);
+        Task<List<Product>> GetStockAsync(int sID);
+        Task<List<Order>> GetStoreOrdersAsync(int sID, string sort, bool ascDesc);
+        Task<List<Order>> GetCustOrdersAsync(int cID, string sort, bool ascDesc);
         //Add to DB
-        public void addOrder(Storefront store, Customer cust, List<Product> cart);
-        public Customer addCustomer(Customer cust);
-
-        //Update DB
-        public void restock(Storefront store, Product item, int howMany);
-        public void addToCart(Storefront store, Product item, int howMany);
-        //Authenticate from DB
-        public bool loginCheck(Customer cust);
-        public Customer getID(Customer cust);
+        public Customer addCustomer(string user, string pass);
+        public Customer getCustomer(Customer cust);
+        public bool authenticate(string user, string pass);
+        public bool existingUser(string user);
+        public void addOrder(int sID, int cID, List<Product> cart);
+        public void restock(int sID, int pID, int howMany);
+        public void addToCart(int sID, int pID, int howMany);
     }
 }

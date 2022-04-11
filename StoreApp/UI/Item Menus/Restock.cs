@@ -8,13 +8,13 @@ namespace UI
         {
             _bl = bl;
         }
-        public void Start()
+        public async void Start()
         {
         //Do I want to it to even have a password to allow this?
         //idk check cust id and if it doesnt match ask for override?
         AnotherOne:
             new MenuFactory().gotoMenu("stock").Start();
-            List<Product> stock = _bl.GetStock(c.cStore);
+            List<Product> stock = await _bl.GetStockAsync(c.cStore.StoreID);
             Console.WriteLine("[#]: Which item would you like to restock?: ");
             Console.WriteLine("[x]: Return to other Options");
             //Input
@@ -74,7 +74,7 @@ namespace UI
             int howMany = 0;
             if (Int32.TryParse(num, out howMany))
             {
-                _bl.restock(c.cStore, c.cStock[index], howMany);
+                _bl.restock(c.cStore.StoreID, c.cStock[index].ProdID, howMany);
             }
             else
             {

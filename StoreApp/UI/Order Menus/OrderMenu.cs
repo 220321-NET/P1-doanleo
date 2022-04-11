@@ -20,7 +20,7 @@ namespace UI
             bool menuExit = false;
             do
             {
-                int count = getOrderCount(accessGranted);
+                int count = getOrderCount(accessGranted).Result;
                 if (count == 0)
                 {
                     Console.WriteLine("[#]: You have no Orders");
@@ -104,7 +104,7 @@ namespace UI
                     which store do you want to check?
             */
         }
-        private void viewOrder(bool isE, string sort, bool ascDesc)
+        private async void viewOrder(bool isE, string sort, bool ascDesc)
         {
             string sorted = "/\\";
             if (!ascDesc) { sorted = "\\/"; }
@@ -113,30 +113,30 @@ namespace UI
             List<Order> oList = new List<Order>();
             if (isE)
             {
-                oList = _bl.GetStoreOrders(c.cStore, sort, ascDesc);
+                oList = await _bl.GetStoreOrdersAsync(c.cStore.StoreID, sort, ascDesc);
             }
             else
             {
-                oList = _bl.GetCustOrders(c.cCust, sort, ascDesc);
+                oList = await _bl.GetCustOrdersAsync(c.cCust.CustID, sort, ascDesc);
             }
             foreach (Order o in oList)
             {
                 Console.WriteLine(o);
             }
         }
-        private int getOrderCount(bool isE)
+        private async Task<int> getOrderCount(bool isE)
         {
-            int count = 0;
+            List<Order> count = new List<Order>();
             string sorter = "Orders.OrderID";
             if (isE)
             {
-                count = _bl.GetStoreOrders(c.cStore, sorter, false).Count;
+                count = await _bl.GetStoreOrdersAsync(c.cStore.StoreID, sorter, false);
             }
             else
             {
-                count = _bl.GetCustOrders(c.cCust, sorter, false).Count;
+                count = await _bl.GetCustOrdersAsync(c.cCust.CustID, sorter, false);
             }
-            return count;
+            return count.Count;
         }
     }
 }

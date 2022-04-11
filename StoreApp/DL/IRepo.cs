@@ -14,72 +14,79 @@ namespace DL
         /// <summary>
         /// Gets a list of the stock within a store
         /// </summary>
-        /// <param name="store">The StoreFront Object you wish to access the inventory of</param>
+        /// <param name="sID">the ID of the store you want</param>
         /// <returns>A List of the store stock</returns>
-        Task<List<Product>> GetStockAsync(Storefront store);
+        Task<List<Product>> GetStockAsync(int sID);
 
         /// <summary>
         /// Gets a list of Orders given the store
         /// </summary>
-        /// <param name="store">The store you want to look at</param>
+        /// <param name="sID">the ID of the store you want</param>
         /// <param name="sort">Order by string</param>
         /// <param name="ascDesc">Sort by Ascending or Descending</param>
         /// <returns>List of orders from a given store</returns>
-        Task<List<Order>> GetStoreOrdersAsync(Storefront store, string sort, bool ascDesc);
+        Task<List<Order>> GetStoreOrdersAsync(int sID, string sort, bool ascDesc);
 
         /// <summary>
         /// Gets the list of orders by a customer
         /// </summary>
-        /// <param name="cust">Customer</param>
+        /// <param name="cID">Customer's ID</param>
         /// <param name="sort">Order by string</param>
         /// <param name="ascDesc">Sort by Ascending or Descending</param>
         /// <returns>List of orders tied to a customer</returns>
-        Task<List<Order>> GetCustOrdersAsync(Customer cust, string sort, bool ascDesc);
+        Task<List<Order>> GetCustOrdersAsync(int cID, string sort, bool ascDesc);
 
         /// <summary>
         /// Add a customer to the database, and returns their ID
         /// </summary>
         /// <param name="cust">Customer information</param>
-        public Customer addCustomer(Customer cust);
+        public Customer addCustomer(string user, string pass);
 
         /// <summary>
-        /// Used after loginCheck, returns id
+        /// used after authenticating. returns an entire customer class
         /// </summary>
-        /// <param name="cust">Customer Info</param>
-        /// <returns>Customer's ID</returns>
-        public Customer getID(Customer cust);
+        /// <param name="user">username</param>
+        /// <param name="pass">password</param>
+        /// <returns>Customer Customer class with ID</returns>
+        public Customer getCustomer(Customer cust);
 
         //Authenticate from DB
         /// <summary>
-        /// Authenticates if a customer is in their database
+        /// checks if username and password match
         /// </summary>
-        /// <param name="cust"> user to authenticate</param>
+        /// <param name="user">uses the authenticate to see if user exists</param>
+        /// <param name="pass">password</param>
         /// <returns>true if successful, false if failed</returns>
-        public bool loginCheck(Customer cust);
-
+        public bool authenticate(string user, string pass);
+        /// <summary>
+        /// checks if username is already used in the database, used for creation
+        /// </summary>
+        /// <param name="user">username used</param>
+        /// <returns>true if already exists, false otherwise</returns>
+        public bool existingUser(string user);
         /// <summary>
         /// Adds an order by inputing the cart into orders
         /// </summary>
-        /// <param name="store">Store bought from</param>
-        /// <param name="cust">Customer who bought</param>
+        /// <param name="sID">Store bought from</param>
+        /// <param name="cID">Customer who bought</param>
         /// <param name="cart">List of product purchased</param>
-        public void addOrder(Storefront store, Customer cust, List<Product> cart);
+        public void addOrder(int sID, int cID, List<Product> cart);
 
         /// <summary>
         /// Incriments to the stock of an item within a store
         /// </summary>
-        /// <param name="store">Store to access inventory</param>
-        /// <param name="item">Item to incriment</param>
+        /// <param name="sID">Store to access inventory</param>
+        /// <param name="pID">Item to incriment</param>
         /// <param name="howMany">Number to incriment by</param>
-        public void restock(Storefront store, Product item, int howMany);
+        public void restock(int sID, int pID, int howMany);
 
         /// <summary>
         /// Decrement to the stock of an item within a store
         /// </summary>
-        /// <param name="store">Store to access inventory</param>
-        /// <param name="item">Item to decrement</param>
+        /// <param name="sID">Store to access inventory</param>
+        /// <param name="pID">Item to decrement</param>
         /// <param name="howMany">Number to decrement by</param>
-        public void addToCart(Storefront store, Product item, int howMany);
+        public void addToCart(int sID, int pID, int howMany);
 
 
 

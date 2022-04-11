@@ -6,10 +6,10 @@ namespace UI
         public ChangeStoreMenu(IBL bl){
             _bl = bl;
         }
-        public void Start()
+        public async void Start()
         {
             //creates a list of stores, puts a flag on the store id you're at rn
-            List<Storefront> stores = _bl.GetStores();
+            List<Storefront> stores = await _bl.GetStoresAsync();
             Console.WriteLine("======================================");
             Console.WriteLine($"[#]: You are at: {c.cStore.StoreName}");
             Console.WriteLine("[#]: Here is a list of our stores");

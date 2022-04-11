@@ -33,13 +33,13 @@ namespace DL
             conn.Close();
             return stores;
         }
-        public async Task<List<Product>> GetStockAsync(Storefront store)
+        public async Task<List<Product>> GetStockAsync(int sID)
         {
             List<Product> stock = new List<Product>();
             using SqlConnection conn = new SqlConnection(_connectionString);
             conn.Open();
             using SqlCommand cmd = new SqlCommand("SELECT StoreID, Products.ProductID, Products.ProductName, Products.ProductCost, Stock FROM StoreStock JOIN Products ON Storestock.ProductID =Products.ProductID WHERE StoreID = @sID", conn);
-            cmd.Parameters.AddWithValue("@sID", store.StoreID);
+            cmd.Parameters.AddWithValue("@sID", sID);
             using SqlDataReader reader = cmd.ExecuteReader();
             while (await reader.ReadAsync())
             {
@@ -60,7 +60,7 @@ namespace DL
             conn.Close();
             return stock;
         }
-        public async Task<List<Order>> GetStoreOrdersAsync(Storefront store, string sort, bool ascDesc)
+        public async Task<List<Order>> GetStoreOrdersAsync(int sID, string sort, bool ascDesc)
         {
             //select * from orders where store = store.storename sort by sort ascdesc
             List<Order> o = new List<Order>();
@@ -72,7 +72,7 @@ namespace DL
             if (ascDesc) { SORTBY = "DESC"; }
             sql = sql + sort + " " + SORTBY;
             using SqlCommand cmd = new SqlCommand(sql, conn);
-            cmd.Parameters.AddWithValue("@id", store.StoreID);
+            cmd.Parameters.AddWithValue("@id", sID);
 
             using SqlDataReader reader = cmd.ExecuteReader();
             while (await reader.ReadAsync())
@@ -102,7 +102,7 @@ namespace DL
             return o;
         }
 
-        public async Task<List<Order>> GetCustOrdersAsync(Customer cust, string sort, bool ascDesc)
+        public async Task<List<Order>> GetCustOrdersAsync(int cID, string sort, bool ascDesc)
         {
             //select * from orders where cust= cust name sort by sort ascdesc
             List<Order> o = new List<Order>();
@@ -113,7 +113,7 @@ namespace DL
             if (ascDesc) { SORTBY = "DESC"; }
             sql = sql + sort + " " + SORTBY;
             using SqlCommand cmd = new SqlCommand(sql, conn);
-            cmd.Parameters.AddWithValue("@id", cust.CustID);
+            cmd.Parameters.AddWithValue("@id", cID);
 
             using SqlDataReader reader = cmd.ExecuteReader();
             while (await reader.ReadAsync())
@@ -142,20 +142,22 @@ namespace DL
 
             return o;
         }
-        public Customer addCustomer(Customer cust)
+        public Customer addCustomer(string user, string pass)
         {
             using SqlConnection conn = new SqlConnection(_connectionString);
             conn.Open();
             using SqlCommand cmd = new SqlCommand("INSERT INTO Customers (username, password) VALUES (@user, @pass)", conn);
-            cmd.Parameters.AddWithValue("@user", cust.username);
-            cmd.Parameters.AddWithValue("@pass", cust.password);
-
+            cmd.Parameters.AddWithValue("@user", user);
+            cmd.Parameters.AddWithValue("@pass", pass);
+            Customer cust = new Customer();
+            cust.username = user;
+            cust.password = pass;
             cmd.ExecuteNonQuery();
 
             conn.Close();
-            return getID(cust);
+            return getCustomer(cust);
         }
-        public Customer getID(Customer cust)
+        public Customer getCustomer(Customer cust)
         {
             int id = -1;
 
@@ -182,25 +184,43 @@ namespace DL
             conn.Close();
             return t;
         }
-        public bool loginCheck(Customer cust)
+        public bool authenticate(string user, string pass)
         {
-            bool found = false;
+            bool match = false;
             using SqlConnection conn = new SqlConnection(_connectionString);
             conn.Open();
             using SqlCommand cmd = new SqlCommand("SELECT * FROM Customers WHERE username = @user AND password = @pass", conn);
-            cmd.Parameters.AddWithValue("@user", cust.username);
-            cmd.Parameters.AddWithValue("@pass", cust.password);
+            cmd.Parameters.AddWithValue("@user", user);
+            cmd.Parameters.AddWithValue("@pass", pass);
 
             SqlDataReader reader = cmd.ExecuteReader();
             if (reader.HasRows)
             {
-                found = true;
+                match = true;
             }
             reader.Close();
             conn.Close();
-            return found;
+            return match;
         }
-        public void addOrder(Storefront store, Customer cust, List<Product> cart)
+        public bool existingUser(string user)
+        {
+            bool match = false;
+            using SqlConnection conn = new SqlConnection(_connectionString);
+            conn.Open();
+            using SqlCommand cmd = new SqlCommand("SELECT * FROM Customers WHERE username = @user", conn);
+            cmd.Parameters.AddWithValue("@user", user);
+
+            SqlDataReader reader = cmd.ExecuteReader();
+            if (reader.HasRows)
+            {
+                match = true;
+            }
+            reader.Close();
+            conn.Close();
+            return match;
+        }
+
+        public void addOrder(int sID, int cID, List<Product> cart)
         {
             int orderNum = 0;
             using SqlConnection conn = new SqlConnection(_connectionString);
@@ -233,20 +253,20 @@ namespace DL
                 cmd.Parameters.AddWithValue("@pid", prod.Key.ProdID);
                 cmd.Parameters.AddWithValue("@on", orderNum);
                 cmd.Parameters.AddWithValue("@pord", prod.Value);
-                cmd.Parameters.AddWithValue("@cid", cust.CustID);
-                cmd.Parameters.AddWithValue("@sid", store.StoreID);
+                cmd.Parameters.AddWithValue("@cid", cID);
+                cmd.Parameters.AddWithValue("@sid", sID);
                 double doub = (prod.Value * prod.Key.ProdCost);
                 cmd.Parameters.AddWithValue("@total", Convert.ToDecimal(doub));
                 cmd.ExecuteNonQuery();
             }
         }
-        public void restock(Storefront store, Product item, int howMany)
+        public void restock(int sID, int pID, int howMany)
         {
             using SqlConnection conn = new SqlConnection(_connectionString);
             conn.Open();
             using SqlCommand cmd = new SqlCommand("SELECT Stock FROM StoreStock WHERE StoreID = @sID AND ProductID = @pID", conn);
-            cmd.Parameters.AddWithValue("@sID", store.StoreID);
-            cmd.Parameters.AddWithValue("@pID", item.ProdID);
+            cmd.Parameters.AddWithValue("@sID", sID);
+            cmd.Parameters.AddWithValue("@pID", pID);
             int stock = 0;
             SqlDataReader reader = cmd.ExecuteReader();
             while (reader.Read())
@@ -257,18 +277,18 @@ namespace DL
             stock = stock + howMany;
             SqlCommand upd = new SqlCommand("UPDATE StoreStock SET Stock = @stock WHERE StoreID = @sID AND ProductID = @pID", conn);
             upd.Parameters.AddWithValue("@stock", stock);
-            upd.Parameters.AddWithValue("@sID", store.StoreID);
-            upd.Parameters.AddWithValue("@pID", item.ProdID);
+            upd.Parameters.AddWithValue("@sID", sID);
+            upd.Parameters.AddWithValue("@pID", pID);
             upd.ExecuteNonQuery();
             conn.Close();
         }
-        public void addToCart(Storefront store, Product item, int howMany)
+        public void addToCart(int sID, int pID, int howMany)
         {
             using SqlConnection conn = new SqlConnection(_connectionString);
             conn.Open();
             using SqlCommand cmd = new SqlCommand("SELECT Stock FROM StoreStock WHERE StoreID = @sID AND ProductID = @pID", conn);
-            cmd.Parameters.AddWithValue("@sID", store.StoreID);
-            cmd.Parameters.AddWithValue("@pID", item.ProdID);
+            cmd.Parameters.AddWithValue("@sID", sID);
+            cmd.Parameters.AddWithValue("@pID", pID);
             int stock = 0;
             SqlDataReader reader = cmd.ExecuteReader();
             while (reader.Read())
@@ -279,8 +299,8 @@ namespace DL
             stock = stock - howMany;
             SqlCommand upd = new SqlCommand("UPDATE StoreStock SET Stock = @stock WHERE StoreID = @sID AND ProductID = @pID", conn);
             upd.Parameters.AddWithValue("@stock", stock);
-            upd.Parameters.AddWithValue("@sID", store.StoreID);
-            upd.Parameters.AddWithValue("@pID", item.ProdID);
+            upd.Parameters.AddWithValue("@sID", sID);
+            upd.Parameters.AddWithValue("@pID", pID);
             upd.ExecuteNonQuery();
             conn.Close();
         }

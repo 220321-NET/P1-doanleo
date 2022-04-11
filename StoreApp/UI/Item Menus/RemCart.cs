@@ -49,7 +49,7 @@ namespace UI
                 }
             }
             //restock it
-            _bl.restock(c.cStore, c.cStock[pos], num);
+            _bl.restock(c.cStore.StoreID, c.cStock[pos].ProdID, num);
             //remove from cart
             c.cCart.RemoveAll(a => a.ProdName == input);
             Console.WriteLine($"[#]: Product {input} has been removed.");

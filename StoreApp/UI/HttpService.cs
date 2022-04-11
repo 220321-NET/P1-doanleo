@@ -15,16 +15,26 @@ public class HttpService
         client.BaseAddress = new Uri(_apiBaseURL);
     }
 
-    public List<Storefront> GetStores()
+    public async Task<List<Storefront>> GetStoresAsync()
     {
         List<Storefront> stores = new List<Storefront>();
-        //stores = JsonSerializer.Deserialze
-
+        try{
+        stores = await JsonSerializer.DeserializeAsync<List<Storefront>>(await client.GetStreamAsync("Stores")) ?? new List<Storefront>();
+        }
+        catch (HttpRequestException ex){
+            Console.WriteLine("Couldn't Retrieve Stores");
+        }
         return stores;
     }
-    public Customer addCustomer(Customer cust)
+    public async Task<List<Product>> GetStockAsync()
     {
-
-        return new Customer();
+        List<Product> stock = new List<Product>();
+        try{
+        stock = await JsonSerializer.DeserializeAsync<List<Product>>(await client.GetStreamAsync("Stock")) ?? new List<Product>();
+        }
+        catch (HttpRequestException ex){
+            Console.WriteLine("Couldn't Retrieve Stores");
+        }
+        return stock;
     }
 }

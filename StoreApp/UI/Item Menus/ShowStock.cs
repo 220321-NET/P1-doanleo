@@ -7,9 +7,9 @@ namespace UI
         {
             _bl = bl;
         }
-        public void Start()
+        public async void Start()
         {
-            c.cStock = _bl.GetStock(c.cStore);
+            c.cStock = await _bl.GetStockAsync(c.cStore.StoreID);
             Console.WriteLine("======================================");
             Console.WriteLine($"Name: {String.Format("{0, 6}", c.cStock[0].ProdName)}|Name: {String.Format("{0, 6}", c.cStock[1].ProdName)}|Name: {String.Format("{0, 6}", c.cStock[2].ProdName)}");
             Console.WriteLine($"Price: ${String.Format("{0:0.00}", c.cStock[0].ProdCost)}|Price: ${String.Format("{0:0.00}", c.cStock[1].ProdCost)}|Price: ${String.Format("{0:0.00}", c.cStock[2].ProdCost)}");

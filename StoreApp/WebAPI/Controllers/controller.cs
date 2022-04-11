@@ -23,43 +23,43 @@ namespace WebAPI.Controllers
             return await _bl.GetStoresAsync();
         }
         [HttpGet]
-        public async Task<List<Product>> GetStockAsync(Storefront store)
+        public async Task<List<Product>> GetStockAsync(int store)
         {
             return await _bl.GetStockAsync(store);
         }
         [HttpGet("sort")]
-        public async Task<List<Order>> GetStoreOrdersAsync(Storefront store, string sort, bool ascDesc)
+        public async Task<List<Order>> GetStoreOrdersAsync(int store, string sort, bool ascDesc)
         {
             return await _bl.GetStoreOrdersAsync(store, sort, ascDesc);
         }
         [HttpGet("sort")]
-        public async Task<List<Order>> GetCustOrdersAsync(Customer cust, string sort, bool ascDesc)
+        public async Task<List<Order>> GetCustOrdersAsync(int cust, string sort, bool ascDesc)
         {
             return await _bl.GetCustOrdersAsync(cust, sort, ascDesc);
         }
         
         [HttpPost]
-        public Customer addCustomer(Customer cust)
+        public Customer addCustomer(string user, string pass)
         {
-            return _bl.addCustomer(cust);
+            return _bl.addCustomer(user, pass);
         }
         [HttpPost]
-        public bool loginCheck(Customer cust)
+        public bool authenticate(string user, string pass)
         {
-            return _bl.loginCheck(cust);
+            return _bl.authenticate(user, pass);
         }
         [HttpPost]
-        public void addOrder(Storefront store, Customer cust, List<Product> cart)
+        public void addOrder(int store, int cust, List<Product> cart)
         {
             _bl.addOrder(store, cust, cart);
         }
         [HttpPut]
-        public void restock(Storefront store, Product item, int howMany)
+        public void restock(int store, int item, int howMany)
         {
             _bl.restock(store, item, howMany);
         }
         [HttpPut]
-        public void addToCart(Storefront store, Product item, int howMany)
+        public void addToCart(int store, int item, int howMany)
         {
             _bl.addToCart(store, item, howMany);
         }

@@ -7,11 +7,11 @@ namespace UI
         {
             _bl = bl;
         }
-        public void Start()
+        public async void Start()
         {
         AnotherOne:
             new MenuFactory().gotoMenu("stock").Start();
-            List<Product> stock = _bl.GetStock(c.cStore);
+            List<Product> stock = await _bl.GetStockAsync(c.cStore.StoreID);
             Console.WriteLine($"[#]: Which item would you like? | Cart: {c.cCart.Count}");
             Console.WriteLine("[x]: Return to other Options");
             //Input
@@ -70,7 +70,7 @@ namespace UI
             int howMany = 0;
             if (Int32.TryParse(num, out howMany))
             {
-                _bl.addToCart(c.cStore, c.cStock[index], howMany);
+                _bl.addToCart(c.cStore.StoreID, c.cStock[index].ProdID, howMany);
                 for (int x = 0; x < howMany; x++)
                 {
                     //will break on negative input
