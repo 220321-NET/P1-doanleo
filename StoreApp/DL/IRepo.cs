@@ -70,7 +70,7 @@ namespace DL
         /// <param name="sID">Store bought from</param>
         /// <param name="cID">Customer who bought</param>
         /// <param name="cart">List of product purchased</param>
-        public void addOrder(int sID, int cID, List<Product> cart);
+        public void addOrder(int sID, int cID, Cart cart);
 
         /// <summary>
         /// Incriments to the stock of an item within a store

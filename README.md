@@ -3,17 +3,17 @@
 ---
 todo
 ---
+make the rest of the dl async
+figure out how to pass multiple parameters into a get post put
+figure out how to split up controller
+set up controllers to properly use everything
+set up http service
+convert BL references in the UI to HTTP service
 
-work on making a cart model
+move UI out of backend
 
-ask her about how httpservice works, "GetStreamAsync("Issues")" where does issues go to?
 
-move front end out of back end folder
-convert references to the UI to references in HTTP service, also make http service
-remove ui from the back end sln
-convert bl stuff to async
-async stuff that needs to interact between both layers
-
+ "GetStreamAsync("Issues")" issues is the url
 
 
 >
@@ -29,6 +29,10 @@ private readonly HttpService _http
 
 _http = http
 >
+?????
+do i want have cart remove x amount? 
+do i want to validate to see if x amount can be added to cart?
+
 ------------------
 Big Apple Hub
 ------------------

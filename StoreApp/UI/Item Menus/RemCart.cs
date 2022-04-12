@@ -9,63 +9,57 @@ namespace UI
         }
         public void Start()
         {
-            if (c.cCart.Count < 1)
+            if (c.cCart.dCart.Count < 1)
             {
                 goto End;
             }
         AnotherOne:
             Console.WriteLine("[#]: Here is your cart");
-            Dictionary<Product, int> d = new Dictionary<Product, int>();
-            foreach (Product prod in c.cCart)
-            {
-                if (d.ContainsKey(prod))
-                {
-                    d[prod] = d[prod] + 1;
-                }
-                else
-                {
-                    d.Add(prod, 1);
-                }
-            }
-            foreach (var prod in d)
-            {
-                Console.WriteLine($"[#]: {prod.Key.ProdName} | {prod.Value} x ${prod.Key.ProdCost} = ${String.Format("{0:0.00}",prod.Value * prod.Key.ProdCost)}");
-            }
+            c.cCart.displayCart();
             Console.WriteLine("[#]: Enter the name of the product you want to remove");
             string? input = Console.ReadLine();
             //find the product to restock
-            int pos = 0;
-            for (int i = 0; i < c.cStock.Count; i++){
-                if (c.cStock[i].ProdName == input){
+            int pos = -1;
+            for (int i = 0; i < c.cStock.Count; i++)
+            {
+                if (c.cStock[i].ProdName == input)
+                {
                     pos = i;
                     break;
                 }
             }
-            //find how much to restock
-            int num = 0;
-            foreach (var prod in d){
-                if(prod.Key.ProdName == c.cStock[pos].ProdName){
-                    num = prod.Value;
-                }
-            }
             //restock it
-            _bl.restock(c.cStore.StoreID, c.cStock[pos].ProdID, num);
-            //remove from cart
-            c.cCart.RemoveAll(a => a.ProdName == input);
-            Console.WriteLine($"[#]: Product {input} has been removed.");
-        
-        
+            if (pos != -1) // if it exists
+            {
+                //find how much to restock
+                int num = 0;
+                foreach (var prod in c.cCart.dCart)
+                {
+                    if (prod.Key.ProdName == c.cStock[pos].ProdName)
+                    {
+                        num = prod.Value;
+                    }
+                }
+                _bl.restock(c.cStore.StoreID, c.cStock[pos].ProdID, num);
+                //remove from cart
+                c.cCart.remFrCart(c.cStock[pos]);
+                Console.WriteLine($"[#]: Product {input} has been removed.");
+            }
+            else
+            {
+                Console.WriteLine($"[#]: Product {input} does not exist.");
+            }
+
+
+
         TryAgain:
-            if (c.cCart.Count < 1){
+            if (c.cCart.dCart.Count < 1)
+            {
                 goto End;
             }
-            foreach (var prod in d)
-            {
-                Console.WriteLine($"[#]: {prod.Key.ProdName} | {prod.Value}");
-            }
-            Console.WriteLine("[#]: Would you like to remove another?: ");
-            Console.WriteLine("[1] Yes ");
-            Console.WriteLine("[x] No ");
+            Console.WriteLine("[#]: Would you like to remove another product?: ");
+            Console.WriteLine("[1]: Yes ");
+            Console.WriteLine("[x]: No ");
 
             string? retry = Console.ReadLine();
             if (retry == "1")

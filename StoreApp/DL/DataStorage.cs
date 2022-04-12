@@ -108,7 +108,7 @@ namespace DL
             List<Order> o = new List<Order>();
             using SqlConnection conn = new SqlConnection(_connectionString);
             conn.Open();
-            string sql = "SELECT OrderID, OrderNum, Stores.StoreName, Customers.username, Products.ProductName, NumberOrdered, OrderTotal FROM Orders JOIN Stores ON Orders.StoreID = Stores.StoreID JOIN Products on Orders.ProductID = Products.ProductID JOIN Customers  on Orders.CustomerID = Customers.CustID WHERE Orders.CustomerID = @id ORDER BY ";
+            string sql = "SELECT OrderID, OrderNum, Stores.StoreName, Customers.username, Products.ProductName, NumberOrdered, OrderTotal FROM Orders JOIN Stores ON Orders.StoreID = Stores.StoreID JOIN Products on Orders.ProductID = Products.ProductID JOIN Customers on Orders.CustomerID = Customers.CustID WHERE Orders.CustomerID = @id ORDER BY ";
             string SORTBY = "ASC";
             if (ascDesc) { SORTBY = "DESC"; }
             sql = sql + sort + " " + SORTBY;
@@ -220,7 +220,7 @@ namespace DL
             return match;
         }
 
-        public void addOrder(int sID, int cID, List<Product> cart)
+        public void addOrder(int sID, int cID, Cart cart)
         {
             int orderNum = 0;
             using SqlConnection conn = new SqlConnection(_connectionString);
@@ -233,18 +233,7 @@ namespace DL
                 orderNum = reader.GetInt32(0) + 1;
             }
             reader.Close();
-            Dictionary<Product, int> d = new Dictionary<Product, int>();
-            foreach (Product prod in cart)
-            {
-                if (d.ContainsKey(prod))
-                {
-                    d[prod] = d[prod] + 1;
-                }
-                else
-                {
-                    d.Add(prod, 1);
-                }
-            }
+            Dictionary<Product, int> d = cart.dCart;
 
             foreach (var prod in d)
             {

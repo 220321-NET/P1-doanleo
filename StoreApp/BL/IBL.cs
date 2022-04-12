@@ -12,7 +12,7 @@ namespace BL
         public Customer getCustomer(Customer cust);
         public bool authenticate(string user, string pass);
         public bool existingUser(string user);
-        public void addOrder(int sID, int cID, List<Product> cart);
+        public void addOrder(int sID, int cID, Cart cart);
         public void restock(int sID, int pID, int howMany);
         public void addToCart(int sID, int pID, int howMany);
     }

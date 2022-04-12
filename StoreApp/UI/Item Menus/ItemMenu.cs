@@ -16,7 +16,7 @@ namespace UI
             {
                 Console.WriteLine("======================================");
                 Console.WriteLine($"[#]: Store: {c.cStore.StoreName}");
-                Console.WriteLine($"[#]: User: {c.cCust.username}| Cart: {c.cCart.Count}");
+                Console.WriteLine($"[#]: User: {c.cCust.username}| Cart: {c.cCart.dCart.Count}");
                 new MenuFactory().gotoMenu("stock").Start();
                 Console.WriteLine("[#]: Select an Option: ");
                 if (c.cCust.isEmployee) { Console.WriteLine("[0]: Restock Items"); }
@@ -43,7 +43,7 @@ namespace UI
                         new MenuFactory().gotoMenu("rem").Start();
                         break;
                     case "3":
-                        if (c.cCart.Count < 1)
+                        if (c.cCart.dCart.Count < 1)
                         {
                             Console.WriteLine("[#]: Your cart is Empty");
                             break;
@@ -51,10 +51,10 @@ namespace UI
                         checkout();
                         break;
                     case "4":
-                        if (c.cCart.Count > 0)
+                        if (c.cCart.dCart.Count > 0)
                         {
                         TryAgain:
-                            Console.WriteLine($"[#]: There are {c.cCart.Count} item(s) in your cart");
+                            Console.WriteLine($"[#]: There are {c.cCart.dCart.Count} item(s) in your cart");
                             Console.WriteLine("[#]: Are you sure you want to change stores?");
                             Console.WriteLine("[#]: Leaving will reset your cart");
                             Console.WriteLine("[1]: Go Back");
@@ -78,10 +78,10 @@ namespace UI
                         }
                         break;
                     case "x":
-                        if (c.cCart.Count > 0)
+                        if (c.cCart.dCart.Count > 0)
                         {
                         TryAgain:
-                            Console.WriteLine($"[#]: There are {c.cCart.Count} item(s) in your cart");
+                            Console.WriteLine($"[#]: There are {c.cCart.dCart.Count} item(s) in your cart");
                             Console.WriteLine("[#]: Are you sure you want to leave?");
                             Console.WriteLine("[#]: Leaving will reset your cart");
                             Console.WriteLine("[1]: Go Back");
@@ -114,25 +114,13 @@ namespace UI
         private void checkout()
         {
             Console.WriteLine("[#]: Here is your cart");
-            Dictionary<Product, int> d = new Dictionary<Product, int>();
+            
             double total = 0;
-            foreach (Product prod in c.cCart)
+            foreach (var prod in c.cCart.dCart)
             {
-                total += prod.ProdCost;
-                if (d.ContainsKey(prod))
-                {
-                    d[prod] = d[prod] + 1;
-                }
-                else
-                {
-                    d.Add(prod, 1);
-                }
+                total += prod.Key.ProdCost * prod.Value;
             }
-            foreach (var prod in d)
-            {
-
-                Console.WriteLine($"[#]: {prod.Key.ProdName} | {prod.Value} x ${prod.Key.ProdCost} = ${String.Format("{0:0.00}", prod.Value * prod.Key.ProdCost)}");
-            }
+            c.cCart.displayCart();
             Console.WriteLine("======================================");
         TryAgain:
             Console.WriteLine("[#]: Would you like to check out?");
@@ -144,7 +132,7 @@ namespace UI
             {
                 _bl.addOrder(c.cStore.StoreID, c.cCust.CustID, c.cCart);
                 //Clear Cart
-                c.cCart = new List<Product>();
+                c.cCart = new Cart();
             }
             else if (retry != "x")
             {
@@ -154,23 +142,11 @@ namespace UI
         }
         private void clearCart()
         {
-            Dictionary<Product, int> d = new Dictionary<Product, int>();
-            foreach (Product prod in c.cCart)
-            {
-                if (d.ContainsKey(prod))
-                {
-                    d[prod] = d[prod] + 1;
-                }
-                else
-                {
-                    d.Add(prod, 1);
-                }
-            }
-            foreach (var prod in d)
+            foreach (var prod in c.cCart.dCart)
             {
                 _bl.restock(c.cStore.StoreID, prod.Key.ProdID, prod.Value);
             }
-            c.cCart = new List<Product>();
+            c.cCart = new Cart();
         }
     }
 }

@@ -6,7 +6,7 @@ namespace UI;
 
 public class HttpService
 {
-    private readonly string _apiBaseURL = " https://localhost:7223/api/";
+    private readonly string _apiBaseURL = " https://localhost:8008/api/";
 
     private HttpClient client = new HttpClient();
 
@@ -18,10 +18,12 @@ public class HttpService
     public async Task<List<Storefront>> GetStoresAsync()
     {
         List<Storefront> stores = new List<Storefront>();
-        try{
-        stores = await JsonSerializer.DeserializeAsync<List<Storefront>>(await client.GetStreamAsync("Stores")) ?? new List<Storefront>();
+        try
+        {
+            stores = await JsonSerializer.DeserializeAsync<List<Storefront>>(await client.GetStreamAsync("Stores")) ?? new List<Storefront>();
         }
-        catch (HttpRequestException ex){
+        catch (HttpRequestException ex)
+        {
             Console.WriteLine("Couldn't Retrieve Stores");
         }
         return stores;
@@ -29,10 +31,12 @@ public class HttpService
     public async Task<List<Product>> GetStockAsync()
     {
         List<Product> stock = new List<Product>();
-        try{
-        stock = await JsonSerializer.DeserializeAsync<List<Product>>(await client.GetStreamAsync("Stock")) ?? new List<Product>();
+        try
+        {
+            stock = await JsonSerializer.DeserializeAsync<List<Product>>(await client.GetStreamAsync("Stock")) ?? new List<Product>();
         }
-        catch (HttpRequestException ex){
+        catch (HttpRequestException ex)
+        {
             Console.WriteLine("Couldn't Retrieve Stores");
         }
         return stock;

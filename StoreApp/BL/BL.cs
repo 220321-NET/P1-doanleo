@@ -39,7 +39,7 @@ namespace BL
         public bool existingUser(string user){
             return _repo.existingUser(user);
         }
-        public void addOrder(int sID, int cID, List<Product> cart)
+        public void addOrder(int sID, int cID, Cart cart)
         {
             _repo.addOrder(sID, cID, cart);
         }

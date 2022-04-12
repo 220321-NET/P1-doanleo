@@ -43,7 +43,7 @@ namespace UI
                         c.cCust = new Customer();
                         c.cStore = new Storefront();
                         c.cStock = new List<Product>();
-                        c.cCart = new List<Product>();
+                        c.cCart = new Cart();
                         menuExit = true;
                         break;
                     default:
