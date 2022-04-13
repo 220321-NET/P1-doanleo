@@ -130,7 +130,7 @@ namespace UI
             string? retry = Console.ReadLine();
             if (retry == "1")
             {
-                _bl.addOrder(c.cStore.StoreID, c.cCust.CustID, c.cCart);
+                _bl.addOrderAsync(c.cStore.StoreID, c.cCust.CustID, c.cCart);
                 //Clear Cart
                 c.cCart = new Cart();
             }
@@ -144,7 +144,7 @@ namespace UI
         {
             foreach (var prod in c.cCart.dCart)
             {
-                _bl.restock(c.cStore.StoreID, prod.Key.ProdID, prod.Value);
+                _bl.restockAsync(c.cStore.StoreID, prod.Key.ProdID, prod.Value);
             }
             c.cCart = new Cart();
         }

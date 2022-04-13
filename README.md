@@ -3,18 +3,33 @@
 ---
 todo
 ---
-make the rest of the dl async
-figure out how to pass multiple parameters into a get post put
-figure out how to split up controller
-set up controllers to properly use everything
+ask her for an example on routing
+
 set up http service
+
 convert BL references in the UI to HTTP service
 
 move UI out of backend
 
 
+
+--did--
+added a get password to interact with the UI layer, converted everything i could to async, prob undo that later
+figured out how to split up controller for now
+
+
  "GetStreamAsync("Issues")" issues is the url
 
+---for httpservice later when calling a multiparameter method---
+for user auth, 
+//multiple parameter
+[HttpGet("details")]
+public IActionResult Details(int id, string first)
+
+/details?id=2&&first=csharp
+
+link?var=x && 
+&& notes next parameter
 
 >
 ui stuff, set up HTTPservice with all the old bl/dl stuff assign it to the menu factory 

@@ -2,16 +2,13 @@ namespace Models
 {
     public class Order
     {
-        /*
-        Order ID, (Product ID, Product Name, Cost),Customer ID, Total Cost
-        */
-        public int OrderID {get ; set;} = 0;
-        public int OrderNum {get ; set;} = 0;
-        public int OrderAmount {get ; set;} = 0;
-        public double OrderTotalCost {get ; set;} = 0;
-        public string OrderProduct {get ; set;} = "Apple";
-        public string OrderStore {get ; set;} = "The Apple Store";
-        public string OrderCust {get ; set;} = "Guest";
+        public int OrderID { get; set; } = 0;
+        public int OrderNum { get; set; } = 0;
+        public int OrderAmount { get; set; } = 0;
+        public double OrderTotalCost { get; set; } = 0;
+        public string OrderProduct { get; set; } = "Apple";
+        public string OrderStore { get; set; } = "The Apple Store";
+        public string OrderCust { get; set; } = "Guest";
 
         public override string ToString()
         {

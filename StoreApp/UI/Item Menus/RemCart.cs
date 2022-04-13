@@ -40,7 +40,7 @@ namespace UI
                         num = prod.Value;
                     }
                 }
-                _bl.restock(c.cStore.StoreID, c.cStock[pos].ProdID, num);
+                _bl.restockAsync(c.cStore.StoreID, c.cStock[pos].ProdID, num);
                 //remove from cart
                 c.cCart.remFrCart(c.cStock[pos]);
                 Console.WriteLine($"[#]: Product {input} has been removed.");

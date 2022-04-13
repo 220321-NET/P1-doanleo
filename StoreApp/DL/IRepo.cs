@@ -37,18 +37,18 @@ namespace DL
         Task<List<Order>> GetCustOrdersAsync(int cID, string sort, bool ascDesc);
 
         /// <summary>
-        /// Add a customer to the database, and returns their ID
-        /// </summary>
-        /// <param name="cust">Customer information</param>
-        public Customer addCustomer(string user, string pass);
-
-        /// <summary>
         /// used after authenticating. returns an entire customer class
         /// </summary>
         /// <param name="user">username</param>
         /// <param name="pass">password</param>
         /// <returns>Customer Customer class with ID</returns>
-        public Customer getCustomer(Customer cust);
+        public Task<Customer> addCustomerAsync(string user, string pass);
+        
+        /// <summary>
+        /// Add a customer to the database, and returns their ID
+        /// </summary>
+        /// <param name="cust">Customer information</param>
+        public Task<Customer> getCustomerAsync(Customer cust);
 
         //Authenticate from DB
         /// <summary>
@@ -57,20 +57,26 @@ namespace DL
         /// <param name="user">uses the authenticate to see if user exists</param>
         /// <param name="pass">password</param>
         /// <returns>true if successful, false if failed</returns>
-        public bool authenticate(string user, string pass);
+        public Task<bool> authenticateAsync(string user, string pass);
         /// <summary>
         /// checks if username is already used in the database, used for creation
         /// </summary>
         /// <param name="user">username used</param>
         /// <returns>true if already exists, false otherwise</returns>
-        public bool existingUser(string user);
+        public Task<bool> existingUserAsync(string user);
+        /// <summary>
+        /// Returns the users password so the UI layer can authenticate
+        /// </summary>
+        /// <param name="user">user to check</param>
+        /// <returns>password string</returns>
+        public Task<List<string>> returnPassAsync(string user);
         /// <summary>
         /// Adds an order by inputing the cart into orders
         /// </summary>
         /// <param name="sID">Store bought from</param>
         /// <param name="cID">Customer who bought</param>
         /// <param name="cart">List of product purchased</param>
-        public void addOrder(int sID, int cID, Cart cart);
+        public void addOrderAsync(int sID, int cID, Cart cart);
 
         /// <summary>
         /// Incriments to the stock of an item within a store
@@ -78,7 +84,7 @@ namespace DL
         /// <param name="sID">Store to access inventory</param>
         /// <param name="pID">Item to incriment</param>
         /// <param name="howMany">Number to incriment by</param>
-        public void restock(int sID, int pID, int howMany);
+        public void restockAsync(int sID, int pID, int howMany);
 
         /// <summary>
         /// Decrement to the stock of an item within a store
@@ -86,7 +92,7 @@ namespace DL
         /// <param name="sID">Store to access inventory</param>
         /// <param name="pID">Item to decrement</param>
         /// <param name="howMany">Number to decrement by</param>
-        public void addToCart(int sID, int pID, int howMany);
+        public void addToCartAsync(int sID, int pID, int howMany);
 
 
 

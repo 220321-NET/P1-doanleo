@@ -115,7 +115,7 @@ namespace DL
             using SqlCommand cmd = new SqlCommand(sql, conn);
             cmd.Parameters.AddWithValue("@id", cID);
 
-            using SqlDataReader reader = cmd.ExecuteReader();
+            using SqlDataReader reader = await cmd.ExecuteReaderAsync();
             while (await reader.ReadAsync())
             {
                 int oid = reader.GetInt32(0);
@@ -142,7 +142,7 @@ namespace DL
 
             return o;
         }
-        public Customer addCustomer(string user, string pass)
+        public async Task<Customer> addCustomerAsync(string user, string pass)
         {
             using SqlConnection conn = new SqlConnection(_connectionString);
             conn.Open();
@@ -152,12 +152,12 @@ namespace DL
             Customer cust = new Customer();
             cust.username = user;
             cust.password = pass;
-            cmd.ExecuteNonQuery();
+            await cmd.ExecuteNonQueryAsync();
 
             conn.Close();
-            return getCustomer(cust);
+            return await getCustomerAsync(cust);
         }
-        public Customer getCustomer(Customer cust)
+        public async Task<Customer> getCustomerAsync(Customer cust)
         {
             int id = -1;
 
@@ -167,8 +167,8 @@ namespace DL
             cmd.Parameters.AddWithValue("@user", cust.username);
             cmd.Parameters.AddWithValue("@pass", cust.password);
             Customer t = new Customer();
-            SqlDataReader reader = cmd.ExecuteReader();
-            while (reader.Read())
+            SqlDataReader reader = await cmd.ExecuteReaderAsync();
+            while (await reader.ReadAsync())
             {
                 id = reader.GetInt32(0);
                 string u = reader.GetString(1);
@@ -184,7 +184,7 @@ namespace DL
             conn.Close();
             return t;
         }
-        public bool authenticate(string user, string pass)
+        public async Task<bool> authenticateAsync(string user, string pass)
         {
             bool match = false;
             using SqlConnection conn = new SqlConnection(_connectionString);
@@ -193,7 +193,7 @@ namespace DL
             cmd.Parameters.AddWithValue("@user", user);
             cmd.Parameters.AddWithValue("@pass", pass);
 
-            SqlDataReader reader = cmd.ExecuteReader();
+            SqlDataReader reader = await cmd.ExecuteReaderAsync();
             if (reader.HasRows)
             {
                 match = true;
@@ -202,7 +202,7 @@ namespace DL
             conn.Close();
             return match;
         }
-        public bool existingUser(string user)
+        public async Task<bool> existingUserAsync(string user)
         {
             bool match = false;
             using SqlConnection conn = new SqlConnection(_connectionString);
@@ -210,7 +210,7 @@ namespace DL
             using SqlCommand cmd = new SqlCommand("SELECT * FROM Customers WHERE username = @user", conn);
             cmd.Parameters.AddWithValue("@user", user);
 
-            SqlDataReader reader = cmd.ExecuteReader();
+            SqlDataReader reader = await cmd.ExecuteReaderAsync();
             if (reader.HasRows)
             {
                 match = true;
@@ -219,16 +219,33 @@ namespace DL
             conn.Close();
             return match;
         }
+        public async Task<List<string>> returnPassAsync(string user)
+        {
+            List<string> cust = new List<string>();
+            using SqlConnection conn = new SqlConnection(_connectionString);
+            conn.Open();
+            using SqlCommand cmd = new SqlCommand("SELECT * FROM Customers WHERE username = @user", conn);
+            cmd.Parameters.AddWithValue("@user", user);
+            SqlDataReader reader = await cmd.ExecuteReaderAsync();
+            while (await reader.ReadAsync())
+            {
+                cust.Add(reader.GetString(1));
+                cust.Add(reader.GetString(2));
+            }
+            reader.Close();
+            conn.Close();
+            return cust;
+        }
 
-        public void addOrder(int sID, int cID, Cart cart)
+        public async void addOrderAsync(int sID, int cID, Cart cart)
         {
             int orderNum = 0;
             using SqlConnection conn = new SqlConnection(_connectionString);
             conn.Open();
             string pullString = "SELECT MAX(OrderNum) FROM Orders";
             using SqlCommand pull = new SqlCommand(pullString, conn);
-            using SqlDataReader reader = pull.ExecuteReader();
-            while (reader.Read())
+            using SqlDataReader reader = await pull.ExecuteReaderAsync();
+            while (await reader.ReadAsync())
             {
                 orderNum = reader.GetInt32(0) + 1;
             }
@@ -246,10 +263,10 @@ namespace DL
                 cmd.Parameters.AddWithValue("@sid", sID);
                 double doub = (prod.Value * prod.Key.ProdCost);
                 cmd.Parameters.AddWithValue("@total", Convert.ToDecimal(doub));
-                cmd.ExecuteNonQuery();
+                await cmd.ExecuteNonQueryAsync();
             }
         }
-        public void restock(int sID, int pID, int howMany)
+        public async void restockAsync(int sID, int pID, int howMany)
         {
             using SqlConnection conn = new SqlConnection(_connectionString);
             conn.Open();
@@ -257,8 +274,8 @@ namespace DL
             cmd.Parameters.AddWithValue("@sID", sID);
             cmd.Parameters.AddWithValue("@pID", pID);
             int stock = 0;
-            SqlDataReader reader = cmd.ExecuteReader();
-            while (reader.Read())
+            SqlDataReader reader = await cmd.ExecuteReaderAsync();
+            while (await reader.ReadAsync())
             {
                 stock = reader.GetInt32(0);
             }
@@ -268,10 +285,10 @@ namespace DL
             upd.Parameters.AddWithValue("@stock", stock);
             upd.Parameters.AddWithValue("@sID", sID);
             upd.Parameters.AddWithValue("@pID", pID);
-            upd.ExecuteNonQuery();
+            await upd.ExecuteNonQueryAsync();
             conn.Close();
         }
-        public void addToCart(int sID, int pID, int howMany)
+        public async void addToCartAsync(int sID, int pID, int howMany)
         {
             using SqlConnection conn = new SqlConnection(_connectionString);
             conn.Open();
@@ -279,8 +296,8 @@ namespace DL
             cmd.Parameters.AddWithValue("@sID", sID);
             cmd.Parameters.AddWithValue("@pID", pID);
             int stock = 0;
-            SqlDataReader reader = cmd.ExecuteReader();
-            while (reader.Read())
+            SqlDataReader reader = await cmd.ExecuteReaderAsync();
+            while (await reader.ReadAsync())
             {
                 stock = reader.GetInt32(0);
             }
@@ -290,7 +307,7 @@ namespace DL
             upd.Parameters.AddWithValue("@stock", stock);
             upd.Parameters.AddWithValue("@sID", sID);
             upd.Parameters.AddWithValue("@pID", pID);
-            upd.ExecuteNonQuery();
+            await upd.ExecuteNonQueryAsync();
             conn.Close();
         }
     }

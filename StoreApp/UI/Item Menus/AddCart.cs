@@ -72,7 +72,7 @@ namespace UI
             {
                 if (howMany > 0)
                 {
-                    _bl.addToCart(c.cStore.StoreID, c.cStock[index].ProdID, howMany);
+                    _bl.addToCartAsync(c.cStore.StoreID, c.cStock[index].ProdID, howMany);
                     c.cCart.addToCart(c.cStock[index], howMany);
                 } else {
                     Console.WriteLine("[#]: Why are you adding 0 of this item?");

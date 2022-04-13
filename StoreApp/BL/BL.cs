@@ -23,33 +23,37 @@ namespace BL
         {
             return await _repo.GetCustOrdersAsync(cID, sort, ascDesc);
         }
-        public Customer addCustomer(string user, string pass)
+        public async Task<Customer> addCustomerAsync(string user, string pass)
         {
-            return _repo.addCustomer(user, pass);
+            return await _repo.addCustomerAsync(user, pass);
         }
 
-        public Customer getCustomer(Customer cust)
+        public async Task<Customer> getCustomerAsync(Customer cust)
         {
-            return _repo.getCustomer(cust);
+            return await _repo.getCustomerAsync(cust);
         }
-        public bool authenticate(string user, string pass)
+        public async Task<bool> authenticateAsync(string user, string pass)
         {
-            return _repo.authenticate(user, pass);
+            return await _repo.authenticateAsync(user, pass);
         }
-        public bool existingUser(string user){
-            return _repo.existingUser(user);
-        }
-        public void addOrder(int sID, int cID, Cart cart)
+        public async Task<bool> existingUserAsync(string user)
         {
-            _repo.addOrder(sID, cID, cart);
+            return await _repo.existingUserAsync(user);
         }
-        public void restock(int sID, int pID, int howMany)
-        {
-            _repo.restock(sID, pID, howMany);
+        public async Task<List<string>> returnPassAsync(string user){
+            return await _repo.returnPassAsync(user);
         }
-        public void addToCart(int sID, int pID, int howMany)
+        public void addOrderAsync(int sID, int cID, Cart cart)
         {
-            _repo.addToCart(sID, pID, howMany);
+            _repo.addOrderAsync(sID, cID, cart);
+        }
+        public void restockAsync(int sID, int pID, int howMany)
+        {
+            _repo.restockAsync(sID, pID, howMany);
+        }
+        public void addToCartAsync(int sID, int pID, int howMany)
+        {
+            _repo.addToCartAsync(sID, pID, howMany);
         }
     }
 }

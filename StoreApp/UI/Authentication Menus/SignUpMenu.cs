@@ -7,7 +7,7 @@ namespace UI
         {
             _bl = bl;
         }
-        public void Start()
+        public async void Start()
         {
             //Create the login
             TryAgain:
@@ -15,7 +15,7 @@ namespace UI
             List<string> login = auth.Start();
             if (login[0] != "Guest")
             {
-                if(_bl.existingUser(login[0])){
+                if(await _bl.existingUserAsync(login[0])){
                     Console.WriteLine("[#] Username already taken, try again");
                     goto TryAgain;
                 }
@@ -25,7 +25,7 @@ namespace UI
                 newC.password = login[1];
                 newC.isEmployee = false;
                 //push that into add customer, take id
-                newC = _bl.addCustomer(newC.username, newC.password);
+                newC = await _bl.addCustomerAsync(newC.username, newC.password);
                 c.cCust = newC;
                 new MenuFactory().gotoMenu("mainstore").Start();
             }

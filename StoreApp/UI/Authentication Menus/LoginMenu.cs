@@ -7,7 +7,7 @@ namespace UI
         {
             _bl = bl;
         }
-        public void Start()
+        public async void Start()
         {
             Customer user = new Customer();
             Console.WriteLine("======================================");
@@ -20,12 +20,12 @@ namespace UI
             user.username = login[0];
             user.password = login[1];
             //authenticate
-            if (_bl.authenticate(user.username, user.password))
+            if (await _bl.authenticateAsync(user.username, user.password))
             {
                 Console.WriteLine("======================================");
                 Console.WriteLine("[#]: Login Successful!");
                 Console.WriteLine("[#]: Press any button to continue");
-                user = _bl.getCustomer(user);
+                user = await _bl.getCustomerAsync(user);
                 Console.ReadKey();
                 c.cCust = user;
                 new MenuFactory().gotoMenu("mainstore").Start();

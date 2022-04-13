@@ -74,7 +74,7 @@ namespace UI
             int howMany = 0;
             if (Int32.TryParse(num, out howMany))
             {
-                _bl.restock(c.cStore.StoreID, c.cStock[index].ProdID, howMany);
+                _bl.restockAsync(c.cStore.StoreID, c.cStock[index].ProdID, howMany);
             }
             else
             {
