@@ -2,12 +2,12 @@ namespace UI
 {
     public class RemCart : IMenu
     {
-        private readonly IBL _bl;
-        public RemCart(IBL bl)
+        private readonly HttpService _http;
+        public RemCart(HttpService http)
         {
-            _bl = bl;
+            _http = http;
         }
-        public void Start()
+        public async Task Start()
         {
             if (c.cCart.dCart.Count < 1)
             {
@@ -35,12 +35,12 @@ namespace UI
                 int num = 0;
                 foreach (var prod in c.cCart.dCart)
                 {
-                    if (prod.Key.ProdName == c.cStock[pos].ProdName)
+                    if (prod.Value.ProdName == c.cStock[pos].ProdName)
                     {
-                        num = prod.Value;
+                        num = prod.Value.ProdStock;
                     }
                 }
-                _bl.restockAsync(c.cStore.StoreID, c.cStock[pos].ProdID, num);
+                await _http.restockAsync(c.cStore.StoreID, c.cStock[pos].ProdID, num);
                 //remove from cart
                 c.cCart.remFrCart(c.cStock[pos]);
                 Console.WriteLine($"[#]: Product {input} has been removed.");

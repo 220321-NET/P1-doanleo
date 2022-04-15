@@ -16,20 +16,21 @@ namespace WebAPI.Controllers
             _bl = bl;
             _cache = cache;
         }
-        [HttpGet("Store/{store}{sort}")]
-        public async Task<List<Order>> GetStoreOrdersAsync(int store, string sort, bool ascDesc)
+
+        [HttpGet("Store/{sID}/{sort}/{ascDesc}")]
+        public async Task<List<Order>> GetStoreOrdersAsync(int sID, string sort, bool ascDesc)
         {
-            return await _bl.GetStoreOrdersAsync(store, sort, ascDesc);
+            return await _bl.GetStoreOrdersAsync(sID, sort, ascDesc);
         }
-        [HttpGet("Customer/{store}{sort}")]
-        public async Task<List<Order>> GetCustOrdersAsync(int cust, string sort, bool ascDesc)
+        [HttpGet("Customer/{sID}/{sort}/{ascDesc}")]
+        public async Task<List<Order>> GetCustOrdersAsync(int cID, string sort, bool ascDesc)
         {
-            return await _bl.GetCustOrdersAsync(cust, sort, ascDesc);
+            return await _bl.GetCustOrdersAsync(cID, sort, ascDesc);
         }
-        [HttpPost]
-        public void addOrderAsync(int store, int cust, Cart cart)
+        [HttpPost("{store}/{cust}")]
+        public async Task addOrderAsync(int store, int cust, Dictionary<int, Product> dCart)
         {
-            _bl.addOrderAsync(store, cust, cart);
+            await _bl.addOrderAsync(store, cust, dCart);
         }
     }
 }

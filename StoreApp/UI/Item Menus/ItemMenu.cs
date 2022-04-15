@@ -2,12 +2,12 @@ namespace UI
 {
     public class ItemMenu : IMenu
     {
-        private readonly IBL _bl;
-        public ItemMenu(IBL bl)
+        private readonly HttpService _http;
+        public ItemMenu(HttpService http)
         {
-            _bl = bl;
+            _http = http;
         }
-        public void Start()
+        public async Task Start()
         {
             bool menuExit = false;
 
@@ -17,7 +17,7 @@ namespace UI
                 Console.WriteLine("======================================");
                 Console.WriteLine($"[#]: Store: {c.cStore.StoreName}");
                 Console.WriteLine($"[#]: User: {c.cCust.username}| Cart: {c.cCart.dCart.Count}");
-                new MenuFactory().gotoMenu("stock").Start();
+                await new MenuFactory().gotoMenu("stock").Start();
                 Console.WriteLine("[#]: Select an Option: ");
                 if (c.cCust.isEmployee) { Console.WriteLine("[0]: Restock Items"); }
                 Console.WriteLine("[1]: Add to Cart");
@@ -34,13 +34,13 @@ namespace UI
                 switch (input)
                 {
                     case "0":
-                        if (c.cCust.isEmployee) { new MenuFactory().gotoMenu("restock").Start(); }
+                        if (c.cCust.isEmployee) { await new MenuFactory().gotoMenu("restock").Start(); }
                         break;
                     case "1":
-                        new MenuFactory().gotoMenu("add").Start();
+                        await new MenuFactory().gotoMenu("add").Start();
                         break;
                     case "2":
-                        new MenuFactory().gotoMenu("rem").Start();
+                        await new MenuFactory().gotoMenu("rem").Start();
                         break;
                     case "3":
                         if (c.cCart.dCart.Count < 1)
@@ -63,7 +63,7 @@ namespace UI
                             if (retry == "x")
                             {
                                 clearCart();
-                                new MenuFactory().gotoMenu("changestore").Start();
+                                await new MenuFactory().gotoMenu("changestore").Start();
                             }
                             else if (retry != "1")
                             {
@@ -74,7 +74,7 @@ namespace UI
                         }
                         else
                         {
-                            new MenuFactory().gotoMenu("changestore").Start();
+                            await new MenuFactory().gotoMenu("changestore").Start();
                         }
                         break;
                     case "x":
@@ -111,14 +111,14 @@ namespace UI
                 }
             } while (!menuExit);
         }
-        private void checkout()
+        private async void checkout()
         {
             Console.WriteLine("[#]: Here is your cart");
             
             double total = 0;
             foreach (var prod in c.cCart.dCart)
             {
-                total += prod.Key.ProdCost * prod.Value;
+                total += prod.Value.ProdCost * prod.Value.ProdStock;
             }
             c.cCart.displayCart();
             Console.WriteLine("======================================");
@@ -130,7 +130,7 @@ namespace UI
             string? retry = Console.ReadLine();
             if (retry == "1")
             {
-                _bl.addOrderAsync(c.cStore.StoreID, c.cCust.CustID, c.cCart);
+                await _http.addOrderAsync(c.cStore.StoreID, c.cCust.CustID, c.cCart.dCart);
                 //Clear Cart
                 c.cCart = new Cart();
             }
@@ -140,11 +140,11 @@ namespace UI
                 goto TryAgain;
             }
         }
-        private void clearCart()
+        private async void clearCart()
         {
             foreach (var prod in c.cCart.dCart)
             {
-                _bl.restockAsync(c.cStore.StoreID, prod.Key.ProdID, prod.Value);
+                await _http.restockAsync(c.cStore.StoreID, prod.Value.ProdID, prod.Value.ProdStock);
             }
             c.cCart = new Cart();
         }

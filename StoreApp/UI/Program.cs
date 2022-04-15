@@ -1,3 +1,3 @@
 ﻿using UI;
 
-new MenuFactory().gotoMenu("main").Start();
+await new MenuFactory().gotoMenu("main").Start();

@@ -23,37 +23,38 @@ namespace BL
         {
             return await _repo.GetCustOrdersAsync(cID, sort, ascDesc);
         }
-        public async Task<Customer> addCustomerAsync(string user, string pass)
+        public Customer addCustomer(string user, string pass)
         {
-            return await _repo.addCustomerAsync(user, pass);
+            return _repo.addCustomer(user, pass);
         }
 
-        public async Task<Customer> getCustomerAsync(Customer cust)
+        public Customer getCustomer(Customer cust)
         {
-            return await _repo.getCustomerAsync(cust);
+            return _repo.getCustomer(cust);
         }
-        public async Task<bool> authenticateAsync(string user, string pass)
+        public bool authenticate(string user, string pass)
         {
-            return await _repo.authenticateAsync(user, pass);
+            return _repo.authenticate(user, pass);
         }
-        public async Task<bool> existingUserAsync(string user)
+        public bool existingUser(string user)
         {
-            return await _repo.existingUserAsync(user);
+            return _repo.existingUser(user);
         }
-        public async Task<List<string>> returnPassAsync(string user){
-            return await _repo.returnPassAsync(user);
-        }
-        public void addOrderAsync(int sID, int cID, Cart cart)
+        public List<string> returnPass(string user)
         {
-            _repo.addOrderAsync(sID, cID, cart);
+            return _repo.returnPass(user);
         }
-        public void restockAsync(int sID, int pID, int howMany)
+        public async Task addOrderAsync(int sID, int cID, Dictionary<int, Product> dCart )
         {
-            _repo.restockAsync(sID, pID, howMany);
+            await _repo.addOrderAsync(sID, cID, dCart);
         }
-        public void addToCartAsync(int sID, int pID, int howMany)
+        public async Task restockAsync(int sID, int pID, int howMany)
         {
-            _repo.addToCartAsync(sID, pID, howMany);
+            await _repo.restockAsync(sID, pID, howMany);
+        }
+        public async Task addToCartAsync(int sID, int pID, int howMany)
+        {
+            await _repo.addToCartAsync(sID, pID, howMany);
         }
     }
 }

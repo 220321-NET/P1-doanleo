@@ -2,12 +2,12 @@ namespace UI
 {
     public class LoginMenu : IMenu
     {
-        private readonly IBL _bl;
-        public LoginMenu(IBL bl)
+        private readonly HttpService _http;
+        public LoginMenu(HttpService http)
         {
-            _bl = bl;
+            _http = http;
         }
-        public async void Start()
+        public async Task Start()
         {
             Customer user = new Customer();
             Console.WriteLine("======================================");
@@ -16,21 +16,27 @@ namespace UI
         TryAgain:
             AuthenticationMenu auth = new AuthenticationMenu();
             List<string> login = auth.Start();
-
             user.username = login[0];
             user.password = login[1];
             //authenticate
-            if (await _bl.authenticateAsync(user.username, user.password))
+            try{
+                user = await _http.authenticate(user);
+            } catch (HttpRequestException ex){
+                Console.WriteLine("Couldn't Verify Customer");
+                Console.WriteLine(ex);
+                goto TryAgain;
+            }
+            
+            if (user.username != "Guest")
             {
                 Console.WriteLine("======================================");
                 Console.WriteLine("[#]: Login Successful!");
                 Console.WriteLine("[#]: Press any button to continue");
-                user = await _bl.getCustomerAsync(user);
                 Console.ReadKey();
                 c.cCust = user;
-                new MenuFactory().gotoMenu("mainstore").Start();
+                await new MenuFactory().gotoMenu("mainstore").Start();
             }
-            else if (user.username != "Guest")
+            else
             {
                 Console.WriteLine("[#]: Could not Authenticate User. Try Again?");
                 Console.WriteLine("[1]: Yes ");
@@ -43,7 +49,7 @@ namespace UI
                 }
                 else if (retry == "2")
                 {
-                    new MenuFactory().gotoMenu("signup").Start();
+                    await new MenuFactory().gotoMenu("signup").Start();
                 }
                 else if (retry != "x")
                 {

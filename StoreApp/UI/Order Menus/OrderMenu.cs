@@ -2,12 +2,12 @@ namespace UI
 {
     public class OrderMenu : IMenu
     {
-        private readonly IBL _bl;
-        public OrderMenu(IBL bl)
+        private readonly HttpService _http;
+        public OrderMenu(HttpService http)
         {
-            _bl = bl;
+            _http = http;
         }
-        public void Start()
+        public async Task Start()
         {
             bool accessGranted = c.cCust.isEmployee;
 
@@ -51,13 +51,13 @@ namespace UI
                 switch (input)
                 {
                     case "1":
-                        viewOrder(accessGranted, "OrderNum", onnum);
+                        await viewOrder(accessGranted, "OrderNum", onnum);
                         onnum = !onnum;
                         otot = true;
                         cs = true;
                         break;
                     case "2":
-                        viewOrder(accessGranted, "OrderTotal", otot);
+                        await viewOrder(accessGranted, "OrderTotal", otot);
                         onnum = true;
                         otot = !otot;
                         cs = true;
@@ -65,21 +65,21 @@ namespace UI
                     case "3":
                         if (accessGranted)
                         {
-                            viewOrder(accessGranted, "CustomerID", cs);
+                            await viewOrder(accessGranted, "CustomerID", cs);
                             onnum = true;
                             otot = true;
                             cs = !cs;
                         }
                         if (!accessGranted)
                         {
-                            viewOrder(accessGranted, "StoreID", cs);
+                            await viewOrder(accessGranted, "StoreID", cs);
                             onnum = true;
                             otot = true;
                             cs = !cs;
                         }
                         break;
                     case "4":
-                        if (accessGranted) { new MenuFactory().gotoMenu("changestore").Start(); }
+                        if (accessGranted) { await new MenuFactory().gotoMenu("changestore").Start(); }
                         break;
                     case "5":
                         if (c.cCust.isEmployee) { accessGranted = !accessGranted; }
@@ -104,7 +104,7 @@ namespace UI
                     which store do you want to check?
             */
         }
-        private async void viewOrder(bool isE, string sort, bool ascDesc)
+        private async Task viewOrder(bool isE, string sort, bool ascDesc)
         {
             string sorted = "/\\";
             if (!ascDesc) { sorted = "\\/"; }
@@ -113,11 +113,11 @@ namespace UI
             List<Order> oList = new List<Order>();
             if (isE)
             {
-                oList = await _bl.GetStoreOrdersAsync(c.cStore.StoreID, sort, ascDesc);
+                oList = await _http.GetStoreOrdersAsync(c.cStore.StoreID, sort, ascDesc);
             }
             else
             {
-                oList = await _bl.GetCustOrdersAsync(c.cCust.CustID, sort, ascDesc);
+                oList = await _http.GetCustOrdersAsync(c.cCust.CustID, sort, ascDesc);
             }
             foreach (Order o in oList)
             {
@@ -130,11 +130,11 @@ namespace UI
             string sorter = "Orders.OrderID";
             if (isE)
             {
-                count = await _bl.GetStoreOrdersAsync(c.cStore.StoreID, sorter, false);
+                count = await _http.GetStoreOrdersAsync(c.cStore.StoreID, sorter, false);
             }
             else
             {
-                count = await _bl.GetCustOrdersAsync(c.cCust.CustID, sorter, false);
+                count = await _http.GetCustOrdersAsync(c.cCust.CustID, sorter, false);
             }
             return count.Count;
         }

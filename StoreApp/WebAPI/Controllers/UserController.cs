@@ -11,37 +11,30 @@ namespace WebAPI.Controllers
     {
         private readonly IBL _bl;
         private IMemoryCache _cache;
-
         public UserController(IBL bl, IMemoryCache cache)
         {
             _bl = bl;
             _cache = cache;
         }
-        //login
-        [HttpGet("Login")]
-        public async Task<Customer> GetCustomerAsync(string user, string pass)
-        {
-            Customer cust = new Customer();
-            cust.username = user;
-            cust.password = pass;
-            cust = await _bl.getCustomerAsync(cust);
-            return cust;
-        }
-        [HttpGet("Authenticate")]
-        // used to autenticate in the UI, is the authenticate method from before
-        public async Task<List<string>> returnPassAsync(string user)
-        {
-            return await _bl.returnPassAsync(user);
-        }
-        [HttpGet("Sign Up")]
-        public async Task<bool> existingUser(string user)
-        {
-            return await _bl.existingUserAsync(user);
-        }
         [HttpPost]
-        public async Task<Customer> addCustomer(string user, string pass)
+        public Customer GetCustomer(Customer cust)
         {
-            return await _bl.addCustomerAsync(user, pass);
+            if (_bl.authenticate(cust.username, cust.password))
+            {
+                cust = _bl.getCustomer(cust);
+                
+                return cust;
+            }
+            return new Customer();
+        }
+        [HttpPut]
+        public Customer addCustomer(Customer cust)
+        {
+            if (_bl.existingUser(cust.username))
+            {
+                return new Customer();
+            }
+            return _bl.addCustomer(cust.username, cust.password);
         }
     }
 }

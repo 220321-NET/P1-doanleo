@@ -3,7 +3,7 @@ namespace UI
     public class MainMenu : IMenu
     {
 
-        public void Start()
+        public async Task Start()
         {
             bool menuExit = false;
             do
@@ -32,10 +32,10 @@ namespace UI
                 switch (input)
                 {
                     case "1":
-                        new MenuFactory().gotoMenu("login").Start();
+                        await new MenuFactory().gotoMenu("login").Start();
                         break;
                     case "2":
-                        new MenuFactory().gotoMenu("signup").Start();
+                        await new MenuFactory().gotoMenu("signup").Start();
                         break;
                     case "x":
                         Console.WriteLine("======================================");

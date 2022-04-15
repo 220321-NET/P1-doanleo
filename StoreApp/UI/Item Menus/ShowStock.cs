@@ -2,14 +2,14 @@ namespace UI
 {
     public class ShowStock : IMenu
     {
-        private readonly IBL _bl;
-        public ShowStock(IBL bl)
+        private readonly HttpService _http;
+        public ShowStock(HttpService http)
         {
-            _bl = bl;
+            _http = http;
         }
-        public async void Start()
+        public async Task Start()
         {
-            c.cStock = await _bl.GetStockAsync(c.cStore.StoreID);
+            c.cStock = await _http.GetStockAsync(c.cStore.StoreID);
             Console.WriteLine("======================================");
             Console.WriteLine($"Name: {String.Format("{0, 6}", c.cStock[0].ProdName)}|Name: {String.Format("{0, 6}", c.cStock[1].ProdName)}|Name: {String.Format("{0, 6}", c.cStock[2].ProdName)}");
             Console.WriteLine($"Price: ${String.Format("{0:0.00}", c.cStock[0].ProdCost)}|Price: ${String.Format("{0:0.00}", c.cStock[1].ProdCost)}|Price: ${String.Format("{0:0.00}", c.cStock[2].ProdCost)}");

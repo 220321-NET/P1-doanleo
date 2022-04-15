@@ -8,13 +8,13 @@ namespace BL
         Task<List<Order>> GetStoreOrdersAsync(int sID, string sort, bool ascDesc);
         Task<List<Order>> GetCustOrdersAsync(int cID, string sort, bool ascDesc);
         //Add to DB
-        public Task<Customer> addCustomerAsync(string user, string pass);
-        public Task<Customer> getCustomerAsync(Customer cust);
-        public Task<bool> authenticateAsync(string user, string pass);
-        public Task<bool> existingUserAsync(string user);
-        public Task<List<string>> returnPassAsync(string user);
-        public void addOrderAsync(int sID, int cID, Cart cart);
-        public void restockAsync(int sID, int pID, int howMany);
-        public void addToCartAsync(int sID, int pID, int howMany);
+        public Customer addCustomer(string user, string pass);
+        public Customer getCustomer(Customer cust);
+        public bool authenticate(string user, string pass);
+        public bool existingUser(string user);
+        public List<string> returnPass(string user);
+        public Task addOrderAsync(int sID, int cID, Dictionary<int, Product> dCart);
+        public Task restockAsync(int sID, int pID, int howMany);
+        public Task addToCartAsync(int sID, int pID, int howMany);
     }
 }

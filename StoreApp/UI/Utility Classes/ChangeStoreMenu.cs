@@ -2,14 +2,14 @@ namespace UI
 {
     public class ChangeStoreMenu : IMenu
     {
-        private readonly IBL _bl;
-        public ChangeStoreMenu(IBL bl){
-            _bl = bl;
+        private readonly HttpService _http;
+        public ChangeStoreMenu(HttpService http){
+            _http = http;
         }
-        public async void Start()
+        public async Task Start()
         {
             //creates a list of stores, puts a flag on the store id you're at rn
-            List<Storefront> stores = await _bl.GetStoresAsync();
+            List<Storefront> stores = await _http.GetStoresAsync();
             Console.WriteLine("======================================");
             Console.WriteLine($"[#]: You are at: {c.cStore.StoreName}");
             Console.WriteLine("[#]: Here is a list of our stores");

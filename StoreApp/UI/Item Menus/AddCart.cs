@@ -2,16 +2,16 @@ namespace UI
 {
     public class AddCart : IMenu
     {
-        private readonly IBL _bl;
-        public AddCart(IBL bl)
+        private readonly HttpService _http;
+        public AddCart(HttpService http)
         {
-            _bl = bl;
+            _http = http;
         }
-        public async void Start()
+        public async Task Start()
         {
         AnotherOne:
-            new MenuFactory().gotoMenu("stock").Start();
-            List<Product> stock = await _bl.GetStockAsync(c.cStore.StoreID);
+            await new MenuFactory().gotoMenu("stock").Start();
+            List<Product> stock = await _http.GetStockAsync(c.cStore.StoreID);
             Console.WriteLine($"[#]: Which item would you like? | Cart: {c.cCart.dCart.Count}");
             Console.WriteLine("[x]: Return to other Options");
             //Input
@@ -21,22 +21,22 @@ namespace UI
             switch (input)
             {
                 case "1":
-                    addToCart(0);
+                    await addToCart(0);
                     break;
                 case "2":
-                    addToCart(1);
+                    await addToCart(1);
                     break;
                 case "3":
-                    addToCart(2);
+                    await addToCart(2);
                     break;
                 case "4":
-                    addToCart(3);
+                    await addToCart(3);
                     break;
                 case "5":
-                    addToCart(4);
+                    await addToCart(4);
                     break;
                 case "6":
-                    addToCart(5);
+                    await addToCart(5);
                     break;
                 case "x":
                     goto End;
@@ -62,7 +62,7 @@ namespace UI
         End:
             Console.WriteLine("");
         }
-        private void addToCart(int index)
+        private async Task addToCart(int index)
         {
         AnotherOne:
             Console.WriteLine($"[#]: How many {c.cStock[index].ProdName} would you like?");
@@ -72,7 +72,7 @@ namespace UI
             {
                 if (howMany > 0)
                 {
-                    _bl.addToCartAsync(c.cStore.StoreID, c.cStock[index].ProdID, howMany);
+                    await _http.addToCartAsync(c.cStore.StoreID, c.cStock[index].ProdID, howMany);
                     c.cCart.addToCart(c.cStock[index], howMany);
                 } else {
                     Console.WriteLine("[#]: Why are you adding 0 of this item?");

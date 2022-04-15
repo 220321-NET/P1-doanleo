@@ -3,19 +3,16 @@
 ---
 todo
 ---
-ask her for an example on routing
 
-set up http service
 
-convert BL references in the UI to HTTP service
+
 
 move UI out of backend
 
+sonar
+serilog
 
 
---did--
-added a get password to interact with the UI layer, converted everything i could to async, prob undo that later
-figured out how to split up controller for now
 
 
  "GetStreamAsync("Issues")" issues is the url
@@ -39,12 +36,13 @@ HttpService http = new HttpService();
 await? new MenuFactory().gotoMenu("main").Start();
 
 in each menu to inject
-private readonly HttpService _http
+private readonly HttpService _http;
 (HttpService http)
 
-_http = http
+_http = http;
 >
 ?????
+stock is a DTO, make a DTO Models folder and add DTO's in it
 do i want have cart remove x amount? 
 do i want to validate to see if x amount can be added to cart?
 

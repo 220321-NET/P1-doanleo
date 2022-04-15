@@ -3,18 +3,18 @@ namespace UI
 
     public class Restock : IMenu
     {
-        private readonly IBL _bl;
-        public Restock(IBL bl)
+        private readonly HttpService _http;
+        public Restock(HttpService http)
         {
-            _bl = bl;
+            _http = http;
         }
-        public async void Start()
+        public async Task Start()
         {
         //Do I want to it to even have a password to allow this?
         //idk check cust id and if it doesnt match ask for override?
         AnotherOne:
-            new MenuFactory().gotoMenu("stock").Start();
-            List<Product> stock = await _bl.GetStockAsync(c.cStore.StoreID);
+            await new MenuFactory().gotoMenu("stock").Start();
+            List<Product> stock = await _http.GetStockAsync(c.cStore.StoreID);
             Console.WriteLine("[#]: Which item would you like to restock?: ");
             Console.WriteLine("[x]: Return to other Options");
             //Input
@@ -25,22 +25,22 @@ namespace UI
             switch (input)
             {
                 case "1":
-                    restock(0);
+                    await restock(0);
                     break;
                 case "2":
-                    restock(1);
+                    await restock(1);
                     break;
                 case "3":
-                    restock(2);
+                    await restock(2);
                     break;
                 case "4":
-                    restock(3);
+                    await restock(3);
                     break;
                 case "5":
-                    restock(4);
+                    await restock(4);
                     break;
                 case "6":
-                    restock(5);
+                    await restock(5);
                     break;
                 case "x":
                     goto End;
@@ -66,7 +66,7 @@ namespace UI
         End:
             Console.WriteLine("");
         }
-        private void restock(int index)
+        private async Task restock(int index)
         {
         AnotherOne:
             Console.WriteLine($"[#]: How many {c.cStock[index].ProdName} would you like to restock?");
@@ -74,7 +74,7 @@ namespace UI
             int howMany = 0;
             if (Int32.TryParse(num, out howMany))
             {
-                _bl.restockAsync(c.cStore.StoreID, c.cStock[index].ProdID, howMany);
+                await _http.restockAsync(c.cStore.StoreID, c.cStock[index].ProdID, howMany);
             }
             else
             {

@@ -2,7 +2,7 @@ namespace UI
 {
     public class StoreMenu : IMenu
     {
-        public void Start()
+        public async Task Start()
         {
             bool menuExit = false;
             //Menu Front End
@@ -26,14 +26,14 @@ namespace UI
                 {
                     case "1":
                         //viewItems(cCust.isEmployee);
-                        new MenuFactory().gotoMenu("item").Start();
+                        await new MenuFactory().gotoMenu("item").Start();
                         break;
                     case "2":
                         //viewOrders(cCust.isEmployee);
-                        new MenuFactory().gotoMenu("order").Start();
+                        await new MenuFactory().gotoMenu("order").Start();
                         break;
                     case "3":
-                        new MenuFactory().gotoMenu("changestore").Start();
+                        await new MenuFactory().gotoMenu("changestore").Start();
                         break;
                     case ".":
                         c.cCust.isEmployee = true;

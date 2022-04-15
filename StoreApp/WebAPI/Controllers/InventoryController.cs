@@ -16,21 +16,29 @@ namespace WebAPI.Controllers
             _bl = bl;
             _cache = cache;
         }
-        //get api/Stores/Stock/0
-        [HttpGet("Stock/{id}")]
-        public async Task<List<Product>> GetStockAsync(int store)
+        public class Stock
         {
-            return await _bl.GetStockAsync(store);
+            //used for restock and add to cart functions
+            public int sID { get; set; }
+            public int pID { get; set; }
+            public int howMany { get; set; }
+        }
+        //get api/Inventory/0
+        [HttpGet("{id}")]
+        public async Task<List<Product>> GetStockAsync(int id)
+        {
+            return await _bl.GetStockAsync(id);
         }
         [HttpPut("restock")]
-        public void restock(int store, int item, int howMany)
+        public async Task restock(Stock stock)
         {
-            _bl.restockAsync(store, item, howMany);
+            Console.WriteLine(stock.sID + ""+ stock.pID + ""+  stock.howMany);
+            await _bl.restockAsync(stock.sID, stock.pID, stock.howMany);
         }
         [HttpPut("addToCart")]
-        public void addToCart(int store, int item, int howMany)
+        public async Task addToCart(Stock stock)
         {
-            _bl.addToCartAsync(store, item, howMany);
+            await _bl.addToCartAsync(stock.sID, stock.pID, stock.howMany);
         }
     }
 }
