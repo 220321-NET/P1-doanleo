@@ -5,9 +5,9 @@ namespace UI
         public IMenu gotoMenu(String menuType)
         {
             // //For Dependency Injection
-            string connect = File.ReadAllText("./connectionString.txt");
-            IRepo _repo = new DataStorage(connect);
-            IBL _bl = new BusinessL(_repo);
+            // string connect = File.ReadAllText("./connectionString.txt");
+            // IRepo _repo = new DataStorage(connect);
+            // IBL _bl = new BusinessL(_repo);
             HttpService http = new HttpService();
             switch (menuType)
             {

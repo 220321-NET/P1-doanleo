@@ -7,40 +7,11 @@ todo
 
 
 
-move UI out of backend
-
 sonar
 serilog
 
 
 
-
- "GetStreamAsync("Issues")" issues is the url
-
----for httpservice later when calling a multiparameter method---
-for user auth, 
-//multiple parameter
-[HttpGet("details")]
-public IActionResult Details(int id, string first)
-
-/details?id=2&&first=csharp
-
-link?var=x && 
-&& notes next parameter
-
->
-ui stuff, set up HTTPservice with all the old bl/dl stuff assign it to the menu factory 
-in menufactory
-HttpService http = new HttpService();
-
-await? new MenuFactory().gotoMenu("main").Start();
-
-in each menu to inject
-private readonly HttpService _http;
-(HttpService http)
-
-_http = http;
->
 ?????
 stock is a DTO, make a DTO Models folder and add DTO's in it
 do i want have cart remove x amount? 

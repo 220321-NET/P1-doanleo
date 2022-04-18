@@ -22,7 +22,7 @@ namespace WebAPI.Controllers
         {
             return await _bl.GetStoreOrdersAsync(sID, sort, ascDesc);
         }
-        [HttpGet("Customer/{sID}/{sort}/{ascDesc}")]
+        [HttpGet("Customer/{cID}/{sort}/{ascDesc}")]
         public async Task<List<Order>> GetCustOrdersAsync(int cID, string sort, bool ascDesc)
         {
             return await _bl.GetCustOrdersAsync(cID, sort, ascDesc);
