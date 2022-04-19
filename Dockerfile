@@ -2,9 +2,9 @@
 
 FROM mcr.microsoft.com/dotnet/sdk:6.0 AS build
 
-WORKDIR /app/
+WORKDIR /app
 
-COPY BackEnd .
+COPY . .
 
 RUN dotnet clean
 RUN dotnet publish WebAPI --configuration Release -o ./publish
