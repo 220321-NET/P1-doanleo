@@ -6,12 +6,12 @@ WORKDIR /app
 
 COPY . .
 
-RUN dotnet clean
+RUN dotnet clean StoreApp.sln
 RUN dotnet publish WebAPI --configuration Release -o ./publish
 
 FROM mcr.microsoft.com/dotnet/aspnet:6.0 AS run
 
-WORKDIR /app/
+WORKDIR /app
 
 COPY --from=build /app/publish .
 
