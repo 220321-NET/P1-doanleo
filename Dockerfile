@@ -6,7 +6,7 @@ WORKDIR /app
 
 COPY . .
 
-RUN dotnet clean /BackEnd/StoreApp.sln
+#RUN dotnet clean /BackEnd/StoreApp.sln
 RUN dotnet publish WebAPI --configuration Release -o ./publish
 
 FROM mcr.microsoft.com/dotnet/aspnet:6.0 AS run
