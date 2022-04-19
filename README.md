@@ -4,11 +4,10 @@
 todo
 ---
 
-
+https://applestoreapp.azurewebsites.net/api/Stores
 
 
 sonar
-serilog
 
 
 
