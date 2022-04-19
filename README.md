@@ -6,6 +6,7 @@ todo
 
 https://applestoreapp.azurewebsites.net/api/Stores
 
+docker had an issue with building for some reason, couldnt figure it out
 
 sonar
 
