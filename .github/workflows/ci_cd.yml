@@ -66,6 +66,5 @@ jobs:
         run: |
           .\.sonar\scanner\dotnet-sonarscanner begin /k:"220321-NET_P1-doanleo" /o:"220321-net" /d:sonar.login="${{ secrets.SONAR_TOKEN }}" /d:sonar.host.url="https://sonarcloud.io"
           
-          dot net clean build BackEnd/StoreApp.sln
-          
+          dot net clean build BackEnd\WebAPI
           .\.sonar\scanner\dotnet-sonarscanner end /d:sonar.login="${{ secrets.SONAR_TOKEN }}"
