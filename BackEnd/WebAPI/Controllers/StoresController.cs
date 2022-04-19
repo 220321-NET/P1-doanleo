@@ -10,11 +10,9 @@ namespace WebAPI.Controllers
     public class StoresController : ControllerBase
     {
         private readonly IBL _bl;
-        private IMemoryCache _cache;
-        public StoresController(IBL bl, IMemoryCache cache)
+        public StoresController(IBL bl)
         {
             _bl = bl;
-            _cache = cache;
         }
         //Get api/Stores/
         [HttpGet]

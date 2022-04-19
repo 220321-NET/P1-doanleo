@@ -10,11 +10,9 @@ namespace WebAPI.Controllers
     public class OrdersController : ControllerBase
     {
         private readonly IBL _bl;
-        private IMemoryCache _cache;
-        public OrdersController(IBL bl, IMemoryCache cache)
+        public OrdersController(IBL bl)
         {
             _bl = bl;
-            _cache = cache;
         }
 
         [HttpGet("Store/{sID}/{sort}/{ascDesc}")]

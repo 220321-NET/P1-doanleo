@@ -10,11 +10,9 @@ namespace WebAPI.Controllers
     public class UserController : ControllerBase
     {
         private readonly IBL _bl;
-        private IMemoryCache _cache;
-        public UserController(IBL bl, IMemoryCache cache)
+        public UserController(IBL bl)
         {
             _bl = bl;
-            _cache = cache;
         }
         [HttpPost]
         public Customer GetCustomer(Customer cust)

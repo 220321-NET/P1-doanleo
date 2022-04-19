@@ -10,11 +10,9 @@ namespace WebAPI.Controllers
     public class InventoryController : ControllerBase
     {
         private readonly IBL _bl;
-        private IMemoryCache _cache;
-        public InventoryController(IBL bl, IMemoryCache cache)
+        public InventoryController(IBL bl)
         {
             _bl = bl;
-            _cache = cache;
         }
         public class Stock
         {

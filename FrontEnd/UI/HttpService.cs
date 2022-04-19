@@ -6,7 +6,8 @@ namespace UI;
 
 public class HttpService
 {
-    private readonly string _apiBaseURL = " http://localhost:5104/api/";
+    //private readonly string _apiBaseURL = " http://localhost:5104/api/";
+    private readonly string _apiBaseURL = "https://applestoreapp.azurewebsites.net/api/";
 
     private HttpClient client = new HttpClient();
 
