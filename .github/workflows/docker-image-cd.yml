@@ -35,6 +35,3 @@ jobs:
         file: ./Dockerfile
         tags: index.docker.io/${{secrets.DOCKERHUB_USERNAME}}/storeapp:${{github.sha}}
         push: true
-        
-    - name: Build the Docker image
-      run: docker build . --file Dockerfile --tag my-image-name:$(date +%s)
