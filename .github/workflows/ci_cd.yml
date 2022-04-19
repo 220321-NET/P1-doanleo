@@ -18,7 +18,7 @@ jobs:
       - name: checkout repository
         uses: actions/checkout@v3
         with:
-         fetch-depth: 0  # Shallow clones should be disabled for a better relevancy of analysis
+          fetch-depth: 0  # Shallow clones should be disabled for a better relevancy of analysis
 
       - name: Setup .NET Core SDK
         uses: actions/setup-dotnet@v2.0.0
