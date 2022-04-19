@@ -165,7 +165,7 @@ namespace DL
             conn.Open();
             using SqlCommand cmd = new SqlCommand("SELECT * FROM Customers WHERE username = @user AND password = @pass", conn);
             cmd.Parameters.AddWithValue("@user", cust.username);
-            cmd.Parameters.AddWithValue("@pass", cust.password);
+            cmd.Parameters.AddWithValue("@pass", cust.password); //sensitive
             Customer t = new Customer();
             SqlDataReader reader = cmd.ExecuteReader();
             while (reader.Read())
@@ -191,7 +191,7 @@ namespace DL
             conn.Open();
             using SqlCommand cmd = new SqlCommand("SELECT * FROM Customers WHERE username = @user AND password = @pass", conn);
             cmd.Parameters.AddWithValue("@user", user);
-            cmd.Parameters.AddWithValue("@pass", pass);
+            cmd.Parameters.AddWithValue("@pass", pass); //sensitive
 
             SqlDataReader reader = cmd.ExecuteReader();
             if (reader.HasRows)
