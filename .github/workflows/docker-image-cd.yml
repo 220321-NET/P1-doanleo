@@ -33,7 +33,7 @@ jobs:
       with:
         context: ./BackEnd
         file: ./DockerFile
-        tags: index.docker.io/${{secrets.DOCKERHUB_USERNAME}}/storeapp:${{github.}}
+        tags: index.docker.io/${{secrets.DOCKERHUB_USERNAME}}/storeapp:${{github.sha}}
         push: true
         
     - name: Build the Docker image
