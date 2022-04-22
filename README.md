@@ -1,20 +1,7 @@
 # P1-doanleo
 
----
-todo
----
-
-https://applestoreapp.azurewebsites.net/api/Stores
-
-sonar
 
 
-
-
-?????
-stock is a DTO, make a DTO Models folder and add DTO's in it
-do i want have cart remove x amount? 
-do i want to validate to see if x amount can be added to cart?
 
 ------------------
 Big Apple Hub
@@ -54,13 +41,4 @@ If the user is an employee, they are redirected to looking at the store's orders
 
 password to the db is appleRemote1, dont tell anyone that
 
-------------------
-Additional Requirements that I'm missing
-------------------
-
-
--Logging with serilog/Nlog
-
-True Exception Handling, kinda hardcoded in
-
-True Input Validation, can make stock negative and restock negatives
+https://applestoreapp.azurewebsites.net/api/Stores
